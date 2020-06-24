@@ -1,9 +1,0 @@
-先和谐，再汉化
-
-用7.5的汉化修改而来， 覆盖,注意备份原文件，
-
-如果汉化报错
-“汉化报错.exe  ”  复制到安装文件夹 运行
-
-
-把ARES.DLL  ISIS.DLL 放到C:\Program Files\Labcenter Electronics\Proteus 7 Professional\BIN
