@@ -1,0 +1,166 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/02/2010  12:38:04  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE bujianji.obj TO bujianji
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  bujianji.obj (BUJIANJI)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  bujianji (BUJIANJI)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0007H     UNIT         ?DT?BUJIANJI
+            IDATA   000FH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     0005H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     0005H                  *** GAP ***
+            CODE    0013H     0003H     ABSOLUTE     
+            CODE    0016H     00AEH     UNIT         ?PR?TIME?BUJIANJI
+            CODE    00C4H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0150H     0054H     UNIT         ?PR?MAIN?BUJIANJI
+            CODE    01A4H     0015H     UNIT         ?PR?INT0?BUJIANJI
+            CODE    01B9H     0013H     UNIT         ?PR?INT1?BUJIANJI
+            CODE    01CCH     0012H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   bujianji (BUJIANJI)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?BUJIANJI
+  +--> ?C_INITSEG
+
+
+
+SYMBOL TABLE OF MODULE:  bujianji (BUJIANJI)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        BUJIANJI
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/02/2010  12:38:04  PAGE 2
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:0008H         PUBLIC        index
+  D:0009H         PUBLIC        flag
+  D:000AH         PUBLIC        n0
+  C:0150H         PUBLIC        main
+  C:0016H         PUBLIC        time
+  D:0089H         PUBLIC        TMOD
+  D:000CH         PUBLIC        step
+  B:00A8H.1       PUBLIC        ET0
+  D:008CH         PUBLIC        TH0
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:000DH         PUBLIC        n
+  C:01A4H         PUBLIC        int0
+  C:01B9H         PUBLIC        int1
+  -------         PROC          MAIN
+  C:0150H         LINE#         5
+  C:0150H         LINE#         6
+  C:0150H         LINE#         7
+  C:0153H         LINE#         8
+  C:0155H         LINE#         9
+  C:0159H         LINE#         10
+  C:015BH         LINE#         11
+  C:015FH         LINE#         12
+  C:0162H         LINE#         13
+  C:0164H         LINE#         14
+  C:0167H         LINE#         15
+  C:016AH         LINE#         16
+  C:016AH         LINE#         17
+  C:016AH         LINE#         18
+  C:0178H         LINE#         19
+  C:0186H         LINE#         20
+  C:0194H         LINE#         21
+  C:01A2H         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         PROC          INT0
+  C:01A4H         LINE#         25
+  C:01A8H         LINE#         27
+  C:01AAH         LINE#         28
+  C:01B4H         LINE#         29
+  -------         ENDPROC       INT0
+  -------         PROC          INT1
+  C:01B9H         LINE#         31
+  C:01BDH         LINE#         33
+  C:01BFH         LINE#         34
+  C:01C7H         LINE#         35
+  -------         ENDPROC       INT1
+  -------         PROC          TIME
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/02/2010  12:38:04  PAGE 3
+
+
+  C:0016H         LINE#         37
+  C:001FH         LINE#         39
+  C:0022H         LINE#         40
+  C:0025H         LINE#         42
+  C:002EH         LINE#         43
+  C:002EH         LINE#         44
+  C:003FH         LINE#         45
+  C:003FH         LINE#         46
+  C:0043H         LINE#         47
+  C:0052H         LINE#         48
+  C:0052H         LINE#         49
+  C:0057H         LINE#         50
+  C:005CH         LINE#         51
+  C:0061H         LINE#         52
+  C:0064H         LINE#         53
+  C:0064H         LINE#         54
+  C:0066H         LINE#         55
+  C:006EH         LINE#         56
+  C:0074H         LINE#         57
+  C:0074H         LINE#         58
+  C:007AH         LINE#         59
+  C:007AH         LINE#         60
+  C:0089H         LINE#         61
+  C:0089H         LINE#         62
+  C:008EH         LINE#         63
+  C:0093H         LINE#         64
+  C:0098H         LINE#         65
+  C:009BH         LINE#         66
+  C:009DH         LINE#         67
+  C:00A5H         LINE#         68
+  C:00A5H         LINE#         69
+  C:00A7H         LINE#         70
+  C:00ADH         LINE#         71
+  C:00ADH         LINE#         72
+  C:00B5H         LINE#         74
+  C:00B7H         LINE#         76
+  C:00BDH         LINE#         79
+  -------         ENDPROC       TIME
+  -------         ENDMOD        BUJIANJI
+
+Program Size: data=16.0 xdata=0 code=468
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

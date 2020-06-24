@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"liushuideng.obj" 
+TO "liushuideng" 
+CODE( 0X0000-0X0FFF )

@@ -1,0 +1,40 @@
+C51 COMPILER V7.06   謃流_缁_                                                              01/02/2010 13:38:50 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 謃流_缁_
+OBJECT MODULE PLACED IN 直流电机.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 直流电机.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          unsigned char speed=0;//定义速度的电压变量
+   3          main()
+   4          {
+   5   1      EA=1;
+   6   1      EX0=1;
+   7   1      IT0=1;//开中断和设置外部中断触发方式
+   8   1      while(1)
+   9   1      {
+  10   2      P2=speed;
+  11   2      }
+  12   1      }
+  13          void int0() interrupt 0//外部中断函数
+  14          {
+  15   1      if(speed==255);
+  16   1      else speed=speed+5;
+  17   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     31    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

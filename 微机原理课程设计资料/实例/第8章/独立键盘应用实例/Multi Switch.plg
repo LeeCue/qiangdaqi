@@ -1,0 +1,31 @@
+<html>
+<body>
+<pre>
+<h1>礦ision2 Build Log</h1>
+<h2>Project:</h2>
+E:\老师的书\黄浩   实例\独立键盘\17 multi Switch\Multi Switch.uv2
+Project File Date:  11/01/2006
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling Multi Switch.c...
+linking...
+Program Size: data=10.0 xdata=0 code=224
+creating hex file from "Multi Switch"...
+"Multi Switch" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Multi Switch.c...
+linking...
+Program Size: data=10.0 xdata=0 code=221
+creating hex file from "Multi Switch"...
+"Multi Switch" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling Multi Switch.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY?MULTI_SWITCH
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?MULTI_SWITCH
+Program Size: data=10.0 xdata=0 code=213
+creating hex file from "Multi Switch"...
+"Multi Switch" - 0 Error(s), 2 Warning(s).

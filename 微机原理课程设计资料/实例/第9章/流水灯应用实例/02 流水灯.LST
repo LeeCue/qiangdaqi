@@ -1,0 +1,47 @@
+C51 COMPILER V7.06   02_Á÷Ë__Æ                                                             01/06/2010 13:41:40 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 02_Á÷Ë__Æ
+OBJECT MODULE PLACED IN 02 Á÷Ë®µÆ.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 02 Á÷Ë®µÆ.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          void delay(uint k)
+   5          {
+   6   1              uint i,j;
+   7   1              for(i=7;i<k;i++)
+   8   1                      for(j=0;j<124;j++);
+   9   1      }
+  10          main()
+  11          {
+  12   1      
+  13   1               while(1)//ËÀÑ­»·
+  14   1               {
+  15   2                      P1=0xfe;delay(500);//µãÁÁµÚÒ»¸ö·¢¹â¶þ¼«¹Ü
+  16   2                      P1=0xfd;delay(500);//µãÁÁµÚ¶þ¸ö·¢¹â¶þ¼«¹Ü
+  17   2                      P1=0xfb;delay(500);//µãÁÁµÚÈý¸ö·¢¹â¶þ¼«¹Ü
+  18   2                      P1=0xf7;delay(500);//µãÁÁµÚËÄ¸ö·¢¹â¶þ¼«¹Ü
+  19   2                      P1=0xef;delay(500);//µãÁÁµÚÎå¸ö·¢¹â¶þ¼«¹Ü
+  20   2                      P1=0xdf;delay(500);//µãÁÁµÚÁù¸ö·¢¹â¶þ¼«¹Ü
+  21   2                      P1=0xbf;delay(500);//µãÁÁµÚÆß¸ö·¢¹â¶þ¼«¹Ü
+  22   2                      P1=0x7f;delay(500);//µãÁÁµÚ°Ë¸ö·¢¹â¶þ¼«¹Ü
+  23   2               }
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     87    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

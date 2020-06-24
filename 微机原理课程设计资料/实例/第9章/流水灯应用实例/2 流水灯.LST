@@ -1,0 +1,52 @@
+C51 COMPILER V6.12  2__鱛___                                                               07/18/2009 10:42:01 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 2__鱛___
+OBJECT MODULE PLACED IN .\2 流水灯.OBJ
+COMPILER INVOKED BY: F:\我的文件\keil\Keil\C51\BIN\C51.EXE .\2 流水灯.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          void delay(uint k)
+   5          {
+   6   1      	uint i,j;
+   7   1      	for(i=7;i<k;i++)
+   8   1      		for(j=0;j<124;j++);
+   9   1      }
+  10          main()
+  11          {
+  12   1       uchar temp=0x01;
+  13   1       P1=0xfe;
+  14   1       delay(1000);
+  15   1       while(1)
+  16   1       {
+  17   2        temp=temp<<1;
+  18   2        temp=~temp;
+  19   2        P1=temp;
+  20   2        delay(1000);
+  21   2        temp=~temp;
+  22   2        if(temp==0x00)
+  23   2        {
+  24   3         P1=0xfe;
+  25   3         delay(1000);
+  26   3         temp=0x01;
+  27   3        }
+  28   2       }
+  29   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     77    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

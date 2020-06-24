@@ -1,0 +1,15 @@
+<html>
+<body>
+<pre>
+<h1>礦ision3 Build Log</h1>
+<h2>Project:</h2>
+D:\2010年备份\扫描\北航  单片机教材\北邮再版2011—12-3\本书附带资料\实例\第13章\开发板实验文件\实验程序keil工程文件\实验板程序工程.uv2
+Project File Date:  04/07/2010
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling 流水灯.c...
+linking...
+Program Size: data=13.0 xdata=0 code=54
+creating hex file from "实验板程序工程"...
+"实验板程序工程" - 0 Error(s), 0 Warning(s).

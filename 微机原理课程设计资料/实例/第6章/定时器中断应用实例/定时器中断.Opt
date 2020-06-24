@@ -1,0 +1,41 @@
+### uVision2 Project, (C) Keil Software
+### Do not modify !
+
+ cExt (*.c)
+ aExt (*.a*; *.src)
+ oExt (*.obj)
+ lExt (*.lib)
+ tExt (*.txt)
+ pExt (*.plm)
+ CppX (*.cpp)
+ DaveTm { 0,0,0,0,0,0,0,0 }
+
+Target (Target 1), 0x0000 // Tools: 'MCS-51'
+GRPOPT 1,(Source Group 1),1,0,0
+
+OPTFFF 1,1,1,0,0,0,0,0,<.\定时器中断.c><定时器中断.c> 
+
+
+TARGOPT 1, (Target 1)
+ CLK51=24000000
+  OPTTT 1,1,1,0
+  OPTHX 0,65535,0,0,0
+  OPTLX 120,65,8,<.\>
+  OPTOX 16
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTXL 1,1,1,1,1,1,1,0,0
+  OPTFL 1,0,1
+  OPTAX 0
+  OPTBL 0,(Data Sheet)<DATASHTS\ATMEL\DOC0787.PDF>
+  OPTBL 1,(Add on databooks)<DATASHTS\ADDBOOKS.PDF>
+  OPTBL 2,(Instruction Set Manual)<DATASHTS\ATMEL\DOC0509.PDF>
+  OPTDL (S8051.DLL)()(DP51.DLL)(-p53)(S8051.DLL)()(TP51.DLL)(-p53)
+  OPTDBG 509,-1,()()()()()()()()()() (BIN\VDM51.DLL)()()()
+  OPTKEY 0,(DLGDP51)((98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(5011=-1,-1,-1,-1,0)(3003=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0))
+  OPTKEY 0,(DLGTP51)((98=-1,-1,-1,-1,0)(82=-1,-1,-1,-1,0)(83=-1,-1,-1,-1,0)(84=-1,-1,-1,-1,0)(85=-1,-1,-1,-1,0)(5011=-1,-1,-1,-1,0)(3003=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0))
+  OPTKEY 0,(VDM51)(-A127.0.0.1 -P8000 -O2)
+  OPTDF 0x84
+  OPTLE <>
+  OPTLC <>
+EndOpt
+

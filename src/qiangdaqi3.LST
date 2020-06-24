@@ -1,0 +1,1309 @@
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE QIANGDAQI3
+OBJECT MODULE PLACED IN qiangdaqi3.OBJ
+COMPILER INVOKED BY: D:\c51\C51\BIN\C51.EXE qiangdaqi3.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar table[]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f};
+   5          uchar code table1[]="QIANG-DA-QI";
+   6          uchar code table2[]="1-Lee 2-Clearlove7 3-Iboy 4-Meiko 5-Ray 6-Sount 7-Langxi 8-MLXG 9-Karsa 10-Xiaohu 11-
+             -Uzi 12-Ming 13-Jacklove 14-Baolan 15-Rookie ";
+   7          uchar code table3[]="                                            ";
+   8          void delay(uint x);
+   9          uint key_scan();
+  10          void display_num(uint i);
+  11          void display_time(uint j);
+  12          void display_led(uint j);
+  13          void lcd_display(uchar i);
+  14          void lcd_yiwei();
+  15          void init();
+  16          void init_lcd();
+  17          void start_keyscan();
+  18          void reset_keyscan();
+  19          void pause_keyscan();
+  20          void setting_keyscan();
+  21          void write_com(uchar com);
+  22          void write_data(uchar dat);
+  23          void led_in();
+  24          void led_in1();
+  25          void led_in2();
+  26          void led_in3();
+  27          void led_in4();
+  28          void led_in5();
+  29          void led_in6();
+  30          void led_in7();
+  31          void led_in8();
+  32          void led_in9();
+  33          void led_in10();
+  34          void led_in11();
+  35          void led_in12();
+  36          void led_in13();
+  37          void led_in14();
+  38          void led_in15();
+  39          void led_in16();
+  40          void led_in17();
+  41          void led_in18();
+  42          void led_in19();
+  43          void led_in20();
+  44          void led_in21();
+  45          void led_in22();
+  46          void led_in23();
+  47          void led_in24();
+  48          uchar shi,ge;
+  49          uchar flag,i,j;
+  50          uint num=20,cnt;
+  51          sbit K1=P3^0;
+  52          sbit K2=P3^1;
+  53          sbit K3=P3^2;
+  54          sbit K4=P3^3;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 2   
+
+  55          sbit rs=P2^6;
+  56          sbit rw=P2^5;
+  57          sbit lcden=P2^7;
+  58          sbit A0=P2^2;
+  59          sbit A1=P2^3;
+  60          sbit A2=P2^4;
+  61          sbit ser=P3^4;
+  62          sbit rck=P3^5; //¥Ê¥¢ºƒ¥Ê∆˜ ±÷” ‰»Î
+  63          sbit srck=P3^6;//“∆Œªºƒ¥Ê∆˜ ±÷” ‰»Î
+  64          
+  65          void main()
+  66          {       
+  67   1              uchar k=0;
+  68   1              init();
+  69   1              init_lcd();
+  70   1              for(i=0;i<11;i++)
+  71   1              {               
+  72   2                      write_data(table1[i]);
+  73   2                      delay(10);
+  74   2              }
+  75   1              write_com(0x80+0x40);
+  76   1              while(1)
+  77   1              {                       
+  78   2                      start_keyscan();
+  79   2                      pause_keyscan();
+  80   2                      reset_keyscan();
+  81   2                      setting_keyscan();
+  82   2                      display_time(num);      
+  83   2                      if(num<=9)
+  84   2                      {
+  85   3                               P0=0xff;
+  86   3                               display_led(num);
+  87   3                               led_in24();
+  88   3                      }       
+  89   2                      if(flag==1)
+  90   2                      {
+  91   3                              i=0;
+  92   3                              display_num(i);
+  93   3                              i=key_scan();
+  94   3                              if(i!=0)
+  95   3                              {
+  96   4                                      display_num(i);
+  97   4                                      delay(300);
+  98   4                                      lcd_display(i);
+  99   4                                      k++;
+ 100   4                                      delay(10);
+ 101   4                              }
+ 102   3                      }
+ 103   2                      if(k==3)
+ 104   2                      {
+ 105   3                              flag=0;
+ 106   3                              TR0=0;
+ 107   3                              lcd_yiwei();
+ 108   3                              k=0;;
+ 109   3                      }               
+ 110   2              }       
+ 111   1      }
+ 112          
+ 113          void init()
+ 114          {                                           
+ 115   1              TMOD=0x01;
+ 116   1              TH0=(65536-50000)/256;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 3   
+
+ 117   1              TL0=(65536-50000)%256;
+ 118   1              EA=1;
+ 119   1              ET0=1;
+ 120   1              TR0=0;
+ 121   1              led_in24();
+ 122   1      }
+ 123          
+ 124          void init_lcd()
+ 125          {
+ 126   1              A0=1;
+ 127   1              A1=1;
+ 128   1              A2=1;
+ 129   1              write_com(0x38);
+ 130   1              write_com(0x08);
+ 131   1              write_com(0x01);
+ 132   1              write_com(0x06);
+ 133   1              write_com(0x0c);        
+ 134   1      }
+ 135          
+ 136          void write_com(uchar com)
+ 137          {
+ 138   1              A0=1;
+ 139   1              A1=1;
+ 140   1              A2=1;
+ 141   1              rs=0;
+ 142   1              rw=0;
+ 143   1              lcden=0;
+ 144   1              P0=com;
+ 145   1              lcden=1;
+ 146   1              delay(5);
+ 147   1              lcden=0;        
+ 148   1      }
+ 149          
+ 150          void write_data(uchar dat)
+ 151          {
+ 152   1              rs=1;
+ 153   1              rw=0;
+ 154   1              lcden=0;
+ 155   1              P0=dat;
+ 156   1              lcden=1;
+ 157   1              delay(5);
+ 158   1              lcden=0;        
+ 159   1      }
+ 160          
+ 161          void lcd_display(uchar i)
+ 162          {
+ 163   1              switch(i)
+ 164   1              {
+ 165   2                      case(0):
+ 166   2                      {
+ 167   3                              write_com(0x80+0x40);
+ 168   3                              for(j=0;j<40;j++)
+ 169   3                              {
+ 170   4                                      write_data(table3[j]);
+ 171   4                                      delay(10);      
+ 172   4                              }
+ 173   3                              break;  
+ 174   3                      }
+ 175   2                      case(1):
+ 176   2                      {
+ 177   3                              for(j=0;j<6;j++)
+ 178   3                              {
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 4   
+
+ 179   4                                      write_data(table2[j]);
+ 180   4                                      delay(10);      
+ 181   4                              }
+ 182   3                              break;
+ 183   3                      }
+ 184   2                      case(2):
+ 185   2                      {
+ 186   3                              for(j=6;j<19;j++)
+ 187   3                              {
+ 188   4                                      write_data(table2[j]);
+ 189   4                                      delay(10);
+ 190   4                              }
+ 191   3                              break;
+ 192   3                      }
+ 193   2                      case(3):
+ 194   2                      {
+ 195   3                              for(j=19;j<26;j++)
+ 196   3                              {
+ 197   4                                      write_data(table2[j]);
+ 198   4                                      delay(10);
+ 199   4                              }
+ 200   3                              break;
+ 201   3                      }
+ 202   2                      case(4):
+ 203   2                      {
+ 204   3                              for(j=26;j<34;j++)
+ 205   3                              {
+ 206   4                                      write_data(table2[j]);
+ 207   4                                      delay(10);
+ 208   4                              }
+ 209   3                              break;
+ 210   3                      }
+ 211   2                      case(5):
+ 212   2                      {
+ 213   3                              for(j=34;j<40;j++)
+ 214   3                              {
+ 215   4                                      write_data(table2[j]);
+ 216   4                                      delay(10);
+ 217   4                              }
+ 218   3                              break;
+ 219   3                      }
+ 220   2                      case(6):
+ 221   2                      {
+ 222   3                              for(j=40;j<48;j++)
+ 223   3                              {
+ 224   4                                      write_data(table2[j]);
+ 225   4                                      delay(10);      
+ 226   4                              }
+ 227   3                              break;
+ 228   3                      }
+ 229   2                      case(7):
+ 230   2                      {
+ 231   3                              for(j=48;j<57;j++)
+ 232   3                              {
+ 233   4                                      write_data(table2[j]);
+ 234   4                                      delay(10);
+ 235   4                              }
+ 236   3                              break;
+ 237   3                      }
+ 238   2                      case(8):
+ 239   2                      {
+ 240   3                              for(j=57;j<64;j++)
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 5   
+
+ 241   3                              {
+ 242   4                                      write_data(table2[j]);
+ 243   4                                      delay(10);      
+ 244   4                              }
+ 245   3                              break;
+ 246   3                      }
+ 247   2                      case(9):
+ 248   2                      {
+ 249   3                              for(j=64;j<72;j++)
+ 250   3                              {
+ 251   4                                      write_data(table2[j]);
+ 252   4                                      delay(10);      
+ 253   4                              }
+ 254   3                              break;
+ 255   3                      }
+ 256   2                      case(10):
+ 257   2                      {
+ 258   3                              for(j=72;j<82;j++)
+ 259   3                              {
+ 260   4                                      write_data(table2[j]);
+ 261   4                                      delay(10);      
+ 262   4                              }
+ 263   3                              break;
+ 264   3                      }
+ 265   2                      case(11):
+ 266   2                      {
+ 267   3                              for(j=82;j<89;j++)
+ 268   3                              {
+ 269   4                                      write_data(table2[j]);
+ 270   4                                      delay(10);      
+ 271   4                              }
+ 272   3                              break;
+ 273   3                      }
+ 274   2                      case(12):
+ 275   2                      {
+ 276   3                              for(j=89;j<97;j++)
+ 277   3                              {
+ 278   4                                      write_data(table2[j]);
+ 279   4                                      delay(10);      
+ 280   4                              }
+ 281   3                              break;
+ 282   3                      }
+ 283   2                      case(13):
+ 284   2                      {
+ 285   3                              for(j=97;j<109;j++)
+ 286   3                              {
+ 287   4                                      write_data(table2[j]);
+ 288   4                                      delay(10);      
+ 289   4                              }
+ 290   3                              break;
+ 291   3                      }
+ 292   2                      case(14):
+ 293   2                      {
+ 294   3                              for(j=109;j<119;j++)
+ 295   3                              {
+ 296   4                                      write_data(table2[j]);
+ 297   4                                      delay(10);
+ 298   4                              }
+ 299   3                              break;
+ 300   3                      }
+ 301   2                      case(15):
+ 302   2                      {
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 6   
+
+ 303   3                              for(j=119;j<129;j++)
+ 304   3                              {
+ 305   4                                      write_data(table2[j]);
+ 306   4                                      delay(10);
+ 307   4                              }
+ 308   3                              break;
+ 309   3                      }
+ 310   2              }       
+ 311   1      }
+ 312          
+ 313          void lcd_yiwei()
+ 314          {
+ 315   1              uchar a;
+ 316   1              i=key_scan();
+ 317   1              if(i>0&&i<16)
+ 318   1              {
+ 319   2                      delay(2000); 
+ 320   2                      for(a=0;a<=20;a++)
+ 321   2                      {
+ 322   3                              write_com(0x18);
+ 323   3                              delay(300);
+ 324   3                      }
+ 325   2                      a=0;
+ 326   2                      delay(300);
+ 327   2                      for(a=0;a<=20;a++)
+ 328   2                      {
+ 329   3                              write_com(0x1c);
+ 330   3                              delay(300);
+ 331   3                      }
+ 332   2              }
+ 333   1      }
+ 334          
+ 335          void start_keyscan()
+ 336          {
+ 337   1              if(K1==0)
+ 338   1              {
+ 339   2                      delay(10);
+ 340   2                      if(K1==0)
+ 341   2                      {
+ 342   3                              flag=1;
+ 343   3                              TR0=1;
+ 344   3                      }
+ 345   2              }
+ 346   1      }
+ 347          
+ 348          void pause_keyscan()
+ 349          {
+ 350   1              if(K2==0)
+ 351   1              {
+ 352   2                      delay(10);
+ 353   2                      if(K2==0)
+ 354   2                      {
+ 355   3                              flag=0;
+ 356   3                              TR0=0;  
+ 357   3                      }
+ 358   2              }
+ 359   1      }
+ 360          
+ 361          void reset_keyscan()
+ 362          {
+ 363   1              if(K3==0)
+ 364   1              {
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 7   
+
+ 365   2                      delay(10);
+ 366   2                      if(K3==0)
+ 367   2                      {
+ 368   3                              TR0=0;
+ 369   3                              flag=0;
+ 370   3                              num=20;
+ 371   3                              i=0;
+ 372   3                              display_time(num);
+ 373   3                              lcd_display(0);
+ 374   3                              write_com(0x80+0x40);
+ 375   3                              led_in24();
+ 376   3                      }
+ 377   2              }
+ 378   1      }
+ 379          
+ 380          void setting_keyscan()
+ 381          {
+ 382   1              uchar set_shi;
+ 383   1              uchar i;
+ 384   1              if(K4==0)
+ 385   1              {
+ 386   2                      delay(10);
+ 387   2                      if(K4==0)
+ 388   2                      {
+ 389   3                              while(!K4)
+ 390   3                              {
+ 391   4                                      i=key_scan();
+ 392   4                                      if(i>=0&&i<10)
+ 393   4                                      {
+ 394   5                                              set_shi=i*10;
+ 395   5                                              num=set_shi;
+ 396   5                                              display_time(num);
+ 397   5                                      }
+ 398   4                                      if(i==14)
+ 399   4                                      {
+ 400   5                                              delay(200);
+ 401   5                                              if(i==14)       num--;
+ 402   5                                      }
+ 403   4                                      if(i==15)
+ 404   4                                      {
+ 405   5                                              delay(200);
+ 406   5                                              if(i==15)       num++;
+ 407   5                                      }
+ 408   4                                      if(num==100)    num=0;
+ 409   4                                      display_time(num);              
+ 410   4                              }
+ 411   3                      }
+ 412   2              }
+ 413   1      }
+ 414          
+ 415          void delay(uint x)
+ 416          {
+ 417   1              uint i,j;
+ 418   1              for(i=x;i>0;i--)
+ 419   1                      for(j=120;j>0;j--);
+ 420   1      }
+ 421          
+ 422          void display_num(uint i)
+ 423          {       
+ 424   1              if(i>=0 && i<10)
+ 425   1              {
+ 426   2                      A0=0;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 8   
+
+ 427   2                      A1=1;
+ 428   2                      A2=0;
+ 429   2                      P0=table[i];
+ 430   2                      delay(5);
+ 431   2              }       
+ 432   1              if(i>=10)
+ 433   1              {
+ 434   2                      shi=i/10;
+ 435   2                      ge=i%10;
+ 436   2                      A0=1;
+ 437   2                      A1=1;
+ 438   2                      A2=0;
+ 439   2                      P0=table[shi];
+ 440   2                      delay(300);
+ 441   2                      A0=0;
+ 442   2                      A1=1;
+ 443   2                      A2=0;
+ 444   2                      P0=table[ge];
+ 445   2                      delay(5); 
+ 446   2              }
+ 447   1      }
+ 448          
+ 449          void display_time(uint j)
+ 450          {       
+ 451   1              if(j>=0 && j<10)
+ 452   1              {
+ 453   2                      A0=0;
+ 454   2                      A1=0;
+ 455   2                      A2=0;
+ 456   2                      P0=table[j];
+ 457   2                      delay(5);
+ 458   2                      A0=1;
+ 459   2                      A1=0;
+ 460   2                      A2=0;
+ 461   2                      P0=table[0];
+ 462   2                      delay(5);
+ 463   2              }       
+ 464   1              if(j>=10)
+ 465   1              {
+ 466   2                      shi=j/10;
+ 467   2                      ge=j%10;
+ 468   2                      A0=0;
+ 469   2                      A1=0;
+ 470   2                      A2=0;
+ 471   2                      P0=table[ge];
+ 472   2                      delay(5);
+ 473   2                      A0=1;
+ 474   2                      A1=0;
+ 475   2                      A2=0;
+ 476   2                      P0=table[shi];
+ 477   2                      delay(5);
+ 478   2              }
+ 479   1      }
+ 480          
+ 481          uint key_scan()
+ 482          {
+ 483   1              uchar n,keynum;
+ 484   1              P1=0x7f;
+ 485   1              n=P1;
+ 486   1              n&=0x0f;
+ 487   1              if(n!=0x0f)
+ 488   1              {
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 9   
+
+ 489   2                      delay(10);
+ 490   2                      P1=0x7f;
+ 491   2                      n=P1;
+ 492   2                      n&=0x0f;
+ 493   2                      if(n!=0x0f)
+ 494   2                      {
+ 495   3                              switch(n)
+ 496   3                              {
+ 497   4                                      case(0x07):keynum=0;break;
+ 498   4                                      case(0x0b):keynum=1;break;
+ 499   4                                      case(0x0d):keynum=2;break;
+ 500   4                                      case(0x0e):keynum=3;break;      
+ 501   4                              }
+ 502   3                      }
+ 503   2              }
+ 504   1              P1=0xbf;
+ 505   1              n=P1;
+ 506   1              n&=0x0f;
+ 507   1              if(n!=0x0f)
+ 508   1              {
+ 509   2                      delay(10);
+ 510   2                      P1=0xbf;
+ 511   2                      n=P1;
+ 512   2                      n&=0x0f;
+ 513   2                      if(n!=0x0f)
+ 514   2                      {
+ 515   3                              switch(n)
+ 516   3                              {
+ 517   4                                      case(0x07):keynum=4;break;
+ 518   4                                      case(0x0b):keynum=5;break;
+ 519   4                                      case(0x0d):keynum=6;break;
+ 520   4                                      case(0x0e):keynum=7;break;      
+ 521   4                              }
+ 522   3                      }
+ 523   2              }
+ 524   1              P1=0xdf;
+ 525   1              n=P1;
+ 526   1              n&=0x0f;
+ 527   1              if(n!=0x0f)
+ 528   1              {
+ 529   2                      delay(10);
+ 530   2                      P1=0xdf;
+ 531   2                      n=P1;
+ 532   2                      n&=0x0f;
+ 533   2                      if(n!=0x0f)
+ 534   2                      {
+ 535   3                              switch(n)
+ 536   3                              {
+ 537   4                                      case(0x07):keynum=8;break;
+ 538   4                                      case(0x0b):keynum=9;break;
+ 539   4                                      case(0x0d):keynum=10;break;
+ 540   4                                      case(0x0e):keynum=11;break;     
+ 541   4                              }
+ 542   3                      }
+ 543   2              }
+ 544   1              P1=0xef;
+ 545   1              n=P1;
+ 546   1              n&=0x0f;
+ 547   1              if(n!=0x0f)
+ 548   1              {
+ 549   2                      delay(10);
+ 550   2                      P1=0xef;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 10  
+
+ 551   2                      n=P1;
+ 552   2                      n&=0x0f;
+ 553   2                      if(n!=0x0f)
+ 554   2                      {
+ 555   3                              switch(n)
+ 556   3                              {
+ 557   4                                      case(0x07):keynum=12;break;
+ 558   4                                      case(0x0b):keynum=13;break;
+ 559   4                                      case(0x0d):keynum=14;break;
+ 560   4                                      case(0x0e):keynum=15;break;     
+ 561   4                              }
+ 562   3                      }
+ 563   2              }
+ 564   1              return keynum;
+ 565   1      }
+ 566          
+ 567          void display_led(uint num)
+ 568          {
+ 569   1              A0=1;
+ 570   1              A1=1;
+ 571   1              A2=1;
+ 572   1              P0=0xff;
+ 573   1              switch(num)
+ 574   1              {
+ 575   2                      case(0):
+ 576   2                      {
+ 577   3                              led_in();
+ 578   3                              delay(1);
+ 579   3                              led_in1();
+ 580   3                              delay(1);
+ 581   3                              led_in2();
+ 582   3                              delay(1);
+ 583   3                              led_in3();
+ 584   3                              delay(1);
+ 585   3                              break;
+ 586   3                      }
+ 587   2                      case(1):
+ 588   2                      {
+ 589   3                              led_in4();
+ 590   3                              delay(1);
+ 591   3                              break;  
+ 592   3                      }
+ 593   2                      case(2):
+ 594   2                      {
+ 595   3                              led_in5();
+ 596   3                              delay(1);
+ 597   3                              led_in6();
+ 598   3                              delay(1);
+ 599   3                              led_in7();
+ 600   3                              delay(1);
+ 601   3                              led_in8();
+ 602   3                              delay(1);
+ 603   3                              break;
+ 604   3                      }
+ 605   2                      case(3):
+ 606   2                      {
+ 607   3                              led_in9();
+ 608   3                              delay(1);
+ 609   3                              led_in10();
+ 610   3                              delay(1);
+ 611   3                              led_in11();
+ 612   3                              delay(1);
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 11  
+
+ 613   3                              led_in12();
+ 614   3                              delay(1);
+ 615   3                              break;  
+ 616   3                      }
+ 617   2                      case(4):
+ 618   2                      {
+ 619   3                              led_in13();
+ 620   3                              delay(1);
+ 621   3                              led_in14();
+ 622   3                              delay(1);
+ 623   3                              led_in15();
+ 624   3                              delay(1);
+ 625   3                              led_in16();
+ 626   3                              delay(1);
+ 627   3                              break;  
+ 628   3                      }
+ 629   2                      case(5):
+ 630   2                      {
+ 631   3                              led_in17();
+ 632   3                              delay(1);
+ 633   3                              led_in18();
+ 634   3                              delay(1);
+ 635   3                              led_in19();
+ 636   3                              delay(1);
+ 637   3                              led_in20();
+ 638   3                              delay(1);
+ 639   3                              break;  
+ 640   3                      }
+ 641   2                      case(6):
+ 642   2                      {
+ 643   3                              led_in();
+ 644   3                              delay(1);
+ 645   3                              led_in18();
+ 646   3                              delay(1);
+ 647   3                              led_in19();
+ 648   3                              delay(1);
+ 649   3                              led_in20();
+ 650   3                              delay(1);
+ 651   3                              break;  
+ 652   3                      }
+ 653   2                      case(7):
+ 654   2                      {
+ 655   3                              led_in21();
+ 656   3                              delay(1);
+ 657   3                              led_in22();
+ 658   3                              delay(1);
+ 659   3                              led_in23();
+ 660   3                              delay(1);
+ 661   3                              led_in3();
+ 662   3                              delay(1);
+ 663   3                              break;  
+ 664   3                      }
+ 665   2                      case(8):
+ 666   2                      {
+ 667   3                              led_in();
+ 668   3                              delay(1);
+ 669   3                              led_in18();
+ 670   3                              delay(1);
+ 671   3                              led_in19();
+ 672   3                              delay(1);
+ 673   3                              led_in3();
+ 674   3                              delay(1);
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 12  
+
+ 675   3                              break;  
+ 676   3                      }
+ 677   2                      case(9):
+ 678   2                      {
+ 679   3                              led_in17();
+ 680   3                              delay(1);
+ 681   3                              led_in18();
+ 682   3                              delay(1);
+ 683   3                              led_in19();
+ 684   3                              delay(1);
+ 685   3                              led_in3();
+ 686   3                              delay(1);
+ 687   3                              break;  
+ 688   3                      }
+ 689   2              }
+ 690   1      }
+ 691          
+ 692          void led_in23()
+ 693          {
+ 694   1              uchar i;
+ 695   1              ser=1;
+ 696   1              srck=1;
+ 697   1              srck=0;
+ 698   1              for(i=0;i<7;i++)
+ 699   1              {
+ 700   2                      ser=0;
+ 701   2                      srck=1;
+ 702   2                      srck=0;
+ 703   2              }
+ 704   1              rck=1;
+ 705   1              rck=0;
+ 706   1              P0=0xf7;        
+ 707   1      }
+ 708          
+ 709          void led_in22()
+ 710          {
+ 711   1              uchar i;
+ 712   1              ser=1;
+ 713   1              srck=1;
+ 714   1              srck=0;
+ 715   1              for(i=0;i<7;i++)
+ 716   1              {
+ 717   2                      ser=0;
+ 718   2                      srck=1;
+ 719   2                      srck=0;
+ 720   2              }
+ 721   1              rck=1;
+ 722   1              rck=0;
+ 723   1              P0=0xef;        
+ 724   1      }
+ 725          
+ 726          void led_in21()
+ 727          {
+ 728   1              uchar i;
+ 729   1              ser=1;
+ 730   1              srck=1;
+ 731   1              srck=0;
+ 732   1              for(i=0;i<7;i++)
+ 733   1              {
+ 734   2                      ser=0;
+ 735   2                      srck=1;
+ 736   2                      srck=0;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 13  
+
+ 737   2              }
+ 738   1              rck=1;
+ 739   1              rck=0;
+ 740   1              P0=0xdf;        
+ 741   1      }
+ 742          
+ 743          void led_in20()
+ 744          {
+ 745   1              uchar i;
+ 746   1              ser=1;
+ 747   1              srck=1;
+ 748   1              srck=0;
+ 749   1              for(i=0;i<2;i++)
+ 750   1              {
+ 751   2                      ser=0;
+ 752   2                      srck=1;
+ 753   2                      srck=0;
+ 754   2              }
+ 755   1              for(i=0;i<5;i++)
+ 756   1              {
+ 757   2                      ser=1;
+ 758   2                      srck=1;
+ 759   2                      srck=0;
+ 760   2              }
+ 761   1              rck=1;
+ 762   1              rck=0;
+ 763   1              P0=0xfb;        
+ 764   1      }
+ 765          
+ 766          void led_in19()
+ 767          {
+ 768   1              uchar i;
+ 769   1              ser=1;
+ 770   1              srck=1;
+ 771   1              srck=0;
+ 772   1              for(i=0;i<2;i++)
+ 773   1              {
+ 774   2                      ser=0;
+ 775   2                      srck=1;
+ 776   2                      srck=0;
+ 777   2              }
+ 778   1              ser=1;
+ 779   1              srck=1;
+ 780   1              srck=0;
+ 781   1              for(i=0;i<3;i++)
+ 782   1              {
+ 783   2                      ser=0;
+ 784   2                      srck=1;
+ 785   2                      srck=0;
+ 786   2              }
+ 787   1              ser=1;
+ 788   1              srck=1;
+ 789   1              srck=0;
+ 790   1              rck=1;
+ 791   1              rck=0;
+ 792   1              P0=0xf7;        
+ 793   1      }
+ 794          
+ 795          void led_in18()
+ 796          {
+ 797   1              uchar i;
+ 798   1              ser=1;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 14  
+
+ 799   1              srck=1;
+ 800   1              srck=0;
+ 801   1              for(i=0;i<2;i++)
+ 802   1              {
+ 803   2                      ser=0;
+ 804   2                      srck=1;
+ 805   2                      srck=0;
+ 806   2              }
+ 807   1              ser=1;
+ 808   1              srck=1;
+ 809   1              srck=0;
+ 810   1              for(i=0;i<3;i++)
+ 811   1              {
+ 812   2                      ser=0;
+ 813   2                      srck=1;
+ 814   2                      srck=0;
+ 815   2              }
+ 816   1              ser=1;
+ 817   1              srck=1;
+ 818   1              srck=0;
+ 819   1              rck=1;
+ 820   1              rck=0;
+ 821   1              P0=0xef;        
+ 822   1      }
+ 823          
+ 824          void led_in17()
+ 825          {
+ 826   1              uchar i;
+ 827   1              for(i=0;i<4;i++)
+ 828   1              {
+ 829   2                      ser=1;
+ 830   2                      srck=1;
+ 831   2                      srck=0;
+ 832   2              }
+ 833   1              for(i=0;i<3;i++)
+ 834   1              {
+ 835   2                      ser=0;
+ 836   2                      srck=1;
+ 837   2                      srck=0;
+ 838   2              }
+ 839   1              ser=1;
+ 840   1              srck=1;
+ 841   1              srck=0;
+ 842   1              rck=1;
+ 843   1              rck=0;
+ 844   1              P0=0xdf;        
+ 845   1      }
+ 846          
+ 847          void led_in16()
+ 848          {
+ 849   1              uchar i;
+ 850   1              for(i=0;i<8;i++)
+ 851   1              {
+ 852   2                      ser=1;
+ 853   2                      srck=1;
+ 854   2                      srck=0;
+ 855   2              }
+ 856   1              rck=1;
+ 857   1              rck=0;
+ 858   1              P0=0xfb;        
+ 859   1      }
+ 860          
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 15  
+
+ 861          void led_in15()
+ 862          {
+ 863   1              uchar i;
+ 864   1              for(i=0;i<3;i++)
+ 865   1              {
+ 866   2                      ser=0;
+ 867   2                      srck=1;
+ 868   2                      srck=0;
+ 869   2              }
+ 870   1              ser=1;
+ 871   1              srck=1;
+ 872   1              srck=0;
+ 873   1              for(i=0;i<4;i++)
+ 874   1              {
+ 875   2                      ser=0;
+ 876   2                      srck=1;
+ 877   2                      srck=0;
+ 878   2              }
+ 879   1              rck=1;
+ 880   1              rck=0;
+ 881   1              P0=0xf7;        
+ 882   1      }
+ 883          
+ 884          void led_in14()
+ 885          {
+ 886   1              uchar i;
+ 887   1              for(i=0;i<3;i++)
+ 888   1              {
+ 889   2                      ser=0;
+ 890   2                      srck=1;
+ 891   2                      srck=0;
+ 892   2              }
+ 893   1              ser=1;
+ 894   1              srck=1;
+ 895   1              srck=0;
+ 896   1              for(i=0;i<4;i++)
+ 897   1              {
+ 898   2                      ser=0;
+ 899   2                      srck=1;
+ 900   2                      srck=0;
+ 901   2              }
+ 902   1              rck=1;
+ 903   1              rck=0;
+ 904   1              P0=0xef;        
+ 905   1      }
+ 906          
+ 907          void led_in13()
+ 908          {
+ 909   1              uchar i;
+ 910   1              for(i=0;i<4;i++)
+ 911   1              {
+ 912   2                      ser=1;
+ 913   2                      srck=1;
+ 914   2                      srck=0;
+ 915   2              }
+ 916   1              for(i=0;i<4;i++)
+ 917   1              {
+ 918   2                      ser=0;
+ 919   2                      srck=1;
+ 920   2                      srck=0;
+ 921   2              }
+ 922   1              rck=1;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 16  
+
+ 923   1              rck=0;
+ 924   1              P0=0xdf;        
+ 925   1      }
+ 926          
+ 927          void led_in12()
+ 928          {
+ 929   1              uchar i;
+ 930   1              for(i=0;i<8;i++)
+ 931   1              {
+ 932   2                      ser=1;
+ 933   2                      srck=1;
+ 934   2                      srck=0;
+ 935   2              }
+ 936   1              rck=1;
+ 937   1              rck=0;
+ 938   1              P0=0xfb;        
+ 939   1      }
+ 940          
+ 941          void led_in11()
+ 942          {
+ 943   1              uchar i;
+ 944   1              ser=1;
+ 945   1              srck=1;
+ 946   1              srck=0;
+ 947   1              for(i=0;i<2;i++)
+ 948   1              {
+ 949   2                      ser=0;
+ 950   2                      srck=1;
+ 951   2                      srck=0;
+ 952   2              }
+ 953   1              ser=1;
+ 954   1              srck=1;
+ 955   1              srck=0;
+ 956   1              for(i=0;i<3;i++)
+ 957   1              {
+ 958   2                      ser=0;
+ 959   2                      srck=1;
+ 960   2                      srck=0;
+ 961   2              }
+ 962   1              ser=1;
+ 963   1              srck=1;
+ 964   1              srck=0;
+ 965   1              rck=1;
+ 966   1              rck=0;
+ 967   1              P0=0xf7;        
+ 968   1      }
+ 969          
+ 970          void led_in10()
+ 971          {
+ 972   1              uchar i;
+ 973   1              ser=1;
+ 974   1              srck=1;
+ 975   1              srck=0;
+ 976   1              for(i=0;i<2;i++)
+ 977   1              {
+ 978   2                      ser=0;
+ 979   2                      srck=1;
+ 980   2                      srck=0;
+ 981   2              }
+ 982   1              ser=1;
+ 983   1              srck=1;
+ 984   1              srck=0;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 17  
+
+ 985   1              for(i=0;i<3;i++)
+ 986   1              {
+ 987   2                      ser=0;
+ 988   2                      srck=1;
+ 989   2                      srck=0;
+ 990   2              }
+ 991   1              ser=1;
+ 992   1              srck=1;
+ 993   1              srck=0;
+ 994   1              rck=1;
+ 995   1              rck=0;
+ 996   1              P0=0xef;        
+ 997   1      }
+ 998          
+ 999          void led_in9()
+1000          {
+1001   1              uchar i;
+1002   1              ser=1;
+1003   1              srck=1;
+1004   1              srck=0;
+1005   1              for(i=0;i<2;i++)
+1006   1              {
+1007   2                      ser=0;
+1008   2                      srck=1;
+1009   2                      srck=0;
+1010   2              }
+1011   1              ser=1;
+1012   1              srck=1;
+1013   1              srck=0;
+1014   1              for(i=0;i<3;i++)
+1015   1              {
+1016   2                      ser=0;
+1017   2                      srck=1;
+1018   2                      srck=0;
+1019   2              }
+1020   1              ser=1;
+1021   1              srck=1;
+1022   1              srck=0;
+1023   1              rck=1;
+1024   1              rck=0;
+1025   1              P0=0xdf;        
+1026   1      }
+1027          
+1028          void led_in8()
+1029          {
+1030   1              uchar i;
+1031   1              for(i=0;i<4;i++)
+1032   1              {
+1033   2                      ser=1;
+1034   2                      srck=1;
+1035   2                      srck=0;
+1036   2              }
+1037   1              for(i=0;i<3;i++)
+1038   1              {
+1039   2                      ser=0;
+1040   2                      srck=1;
+1041   2                      srck=0;
+1042   2              }
+1043   1              ser=1;
+1044   1              srck=1;
+1045   1              srck=0;
+1046   1              rck=1;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 18  
+
+1047   1              rck=0;
+1048   1              P0=0xfb;        
+1049   1      }
+1050          
+1051          void led_in7()
+1052          {
+1053   1              uchar i;
+1054   1              ser=1;
+1055   1              srck=1;
+1056   1              srck=0;
+1057   1              for(i=0;i<2;i++)
+1058   1              {
+1059   2                      ser=0;
+1060   2                      srck=1;
+1061   2                      srck=0;
+1062   2              }
+1063   1              ser=1;
+1064   1              srck=1;
+1065   1              srck=0;
+1066   1              for(i=0;i<3;i++)
+1067   1              {
+1068   2                      ser=0;
+1069   2                      srck=1;
+1070   2                      srck=0;
+1071   2              }
+1072   1              ser=1;
+1073   1              srck=1;
+1074   1              srck=0;
+1075   1              rck=1;
+1076   1              rck=0;
+1077   1              P0=0xf7;        
+1078   1      }
+1079          
+1080          void led_in6()
+1081          {
+1082   1              uchar i;
+1083   1              ser=1;
+1084   1              srck=1;
+1085   1              srck=0;
+1086   1              for(i=0;i<2;i++)
+1087   1              {
+1088   2                      ser=0;
+1089   2                      srck=1;
+1090   2                      srck=0;
+1091   2              }
+1092   1              ser=1;
+1093   1              srck=1;
+1094   1              srck=0;
+1095   1              for(i=0;i<3;i++)
+1096   1              {
+1097   2                      ser=0;
+1098   2                      srck=1;
+1099   2                      srck=0;
+1100   2              }
+1101   1              ser=1;
+1102   1              srck=1;
+1103   1              srck=0;
+1104   1              rck=1;
+1105   1              rck=0;
+1106   1              P0=0xef;        
+1107   1      }
+1108          
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 19  
+
+1109          void led_in5()
+1110          {
+1111   1              uchar i;
+1112   1              ser=1;
+1113   1              srck=1;
+1114   1              srck=0;
+1115   1              for(i=0;i<2;i++)
+1116   1              {
+1117   2                      ser=0;
+1118   2                      srck=1;
+1119   2                      srck=0;
+1120   2              }
+1121   1              for(i=0;i<5;i++)
+1122   1              {
+1123   2                      ser=1;
+1124   2                      srck=1;
+1125   2                      srck=0;
+1126   2              }
+1127   1              rck=1;
+1128   1              rck=0;
+1129   1              P0=0xdf;        
+1130   1      }
+1131          
+1132          void led_in4()
+1133          {
+1134   1              uchar i;
+1135   1              for(i=0;i<8;i++)
+1136   1              {
+1137   2                      ser=1;
+1138   2                      srck=1;
+1139   2                      srck=0;
+1140   2              }
+1141   1              rck=1;
+1142   1              rck=0;
+1143   1              P0=0xf7;        
+1144   1      }
+1145          
+1146          void led_in()
+1147          {
+1148   1              uchar i;
+1149   1              for(i=0;i<8;i++)
+1150   1              {
+1151   2                      ser=1;
+1152   2                      srck=1;
+1153   2                      srck=0;
+1154   2              }
+1155   1              rck=1;
+1156   1              rck=0;
+1157   1              P0=0xdf;        
+1158   1      }
+1159          
+1160          void led_in1()
+1161          {
+1162   1              uchar i;
+1163   1              ser=1;
+1164   1              srck=1;
+1165   1              srck=0;
+1166   1              ser=1;
+1167   1              srck=1;
+1168   1              srck=0;
+1169   1              for(i=0;i<6;i++)
+1170   1              {
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 20  
+
+1171   2                      ser=0;
+1172   2                      srck=1;
+1173   2                      srck=0;
+1174   2              }
+1175   1              ser=1;
+1176   1              srck=1;
+1177   1              srck=0;
+1178   1              rck=1;
+1179   1              rck=0;
+1180   1              P0=0xef;        
+1181   1      }
+1182          
+1183          void led_in2()
+1184          {
+1185   1              uchar i;
+1186   1              ser=1;
+1187   1              srck=1;
+1188   1              srck=0;
+1189   1              for(i=0;i<6;i++)
+1190   1              {
+1191   2                      ser=0;
+1192   2                      srck=1;
+1193   2                      srck=0;
+1194   2              }
+1195   1              ser=1;
+1196   1              srck=1;
+1197   1              srck=0;
+1198   1              rck=1;
+1199   1              rck=0;
+1200   1              P0=0xf7;        
+1201   1      }
+1202          
+1203          void led_in3()
+1204          {
+1205   1              uchar i;
+1206   1              for(i=0;i<8;i++)
+1207   1              {
+1208   2                      ser=1;
+1209   2                      srck=1;
+1210   2                      srck=0;
+1211   2              }
+1212   1              rck=1;
+1213   1              rck=0;
+1214   1              P0=0xfb;        
+1215   1      }
+1216          
+1217          void led_in24()
+1218          {
+1219   1              uchar i;
+1220   1              for(i=0;i<8;i++)
+1221   1              {
+1222   2                      ser=0;
+1223   2                      srck=1;
+1224   2                      srck=0;
+1225   2              }
+1226   1              rck=1;
+1227   1              rck=0;
+1228   1      }
+1229          void timer_smg() interrupt 1
+1230          {
+1231   1              uchar cnt;
+1232   1              TH0=(65536-50000)/256;
+C51 COMPILER V9.57.0.0   QIANGDAQI3                                                        07/03/2019 20:04:20 PAGE 21  
+
+1233   1              TL0=(65536-50000)%256;
+1234   1              cnt++;  
+1235   1              if(flag==1 && cnt==20)
+1236   1              {
+1237   2                      num--;
+1238   2                      cnt=0;
+1239   2                      if(num==0)
+1240   2                      {
+1241   3                              TR0=0;
+1242   3                              flag=0;
+1243   3                      }
+1244   2              }
+1245   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2715    ----
+   CONSTANT SIZE    =    187    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     19       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

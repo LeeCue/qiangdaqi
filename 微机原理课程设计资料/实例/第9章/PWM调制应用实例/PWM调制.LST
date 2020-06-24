@@ -1,0 +1,56 @@
+C51 COMPILER V7.06   PWM_÷ÖÆ                                                               01/27/2010 14:10:22 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE PWM_÷ÖÆ
+OBJECT MODULE PLACED IN PWMµ÷ÖÆ.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE PWMµ÷ÖÆ.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char 
+   3          #define uint unsigned int
+   4          sbit PWM=P2^0;
+   5          uchar n=0;
+   6          void delay(uchar m)   //  ÑÓÊ±0.m Ãë
+   7          {
+   8   1          unsigned char a,b,c;
+   9   1      while(m--)
+  10   1          for(c=19;c>0;c--)
+  11   1              for(b=20;b>0;b--)
+  12   1                  for(a=130;a>0;a--);
+  13   1      }
+  14          void PWMout(uchar q)
+  15          {
+  16   1              PWM=0;
+  17   1              delay(10-q);
+  18   1              PWM=1;
+  19   1              delay(q);
+  20   1      }
+  21          void main()
+  22          {
+  23   1      EA=1;
+  24   1      EX0=1;
+  25   1      IT0=1;
+  26   1      while(1)
+  27   1      PWMout(n);
+  28   1      }
+  29          void INT() interrupt 0
+  30          {
+  31   1      if(n==10)n=10;
+  32   1      else n=n+1;
+  33   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     79    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

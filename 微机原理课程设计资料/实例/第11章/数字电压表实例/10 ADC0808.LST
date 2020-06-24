@@ -1,0 +1,72 @@
+C51 COMPILER V7.06   10_ADC0808                                                            01/30/2010 11:39:11 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 10_ADC0808
+OBJECT MODULE PLACED IN 10 ADC0808.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 10 ADC0808.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char             
+   4          uchar code table[]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6,0xee,0x3e,0x9c,0x7a,0x9e,0x8e};
+   5          sbit START=P3^0;
+   6          sbit EOC=P3^1;
+   7          sbit OE=P3^2;
+   8          sbit dot=P1^0;
+   9          void delay(uint m)
+  10          {
+  11   1              while(m--);
+  12   1      }
+  13          void main()              
+  14           {
+  15   1        uint temp; 
+  16   1        START=0;
+  17   1        OE=0;
+  18   1        START=1;
+  19   1        START=0;  
+  20   1        while(1)
+  21   1        {
+  22   2           if(EOC==1)
+  23   2          {
+  24   3           OE=1;
+  25   3           temp=P0;
+  26   3           temp=temp*1.0/255*500;
+  27   3           OE=0;
+  28   3      
+  29   3           P2=0xfe;
+  30   3           P1=table[temp%10];
+  31   3           delay(500);
+  32   3      
+  33   3           P2=0xfd;
+  34   3           P1=table[temp/10%10];
+  35   3           delay(500);          
+  36   3      
+  37   3           P2=0xfb;
+  38   3           P1=table[temp/100%10];
+  39   3               dot=1;
+  40   3           delay(500);
+  41   3      
+  42   3           START=1;
+  43   3           START=0;
+  44   3              }
+  45   2        }
+  46   1       }
+  47          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    170    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V7.06   10_ADC0808                                                            01/30/2010 11:39:11 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

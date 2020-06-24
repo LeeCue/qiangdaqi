@@ -1,0 +1,93 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/06/2010  16:34:06  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE 04 数码管动态显示.obj TO 数码管动态显示 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  04 数码管动态显示.obj (04_数码_躝_蘝_允_)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  数码管动态显示 (04_数码_躝_蘝_允_)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0027H     UNIT         ?PR?MAIN?04_数码_躝_蘝_允_
+            CODE    002AH     0018H     UNIT         ?CO?04_数码_躝_蘝_允_
+            CODE    0042H     000CH     UNIT         ?C_C51STARTUP
+            CODE    004EH     000BH     UNIT         ?PR?_DELAY?04_数码_躝_蘝_允_
+
+
+
+OVERLAY MAP OF MODULE:   数码管动态显示 (04_数码_躝_蘝_允_)
+
+
+SEGMENT                                DATA_GROUP 
+  +--> CALLED SEGMENT                START    LENGTH
+----------------------------------------------------
+?C_C51STARTUP                        -----    -----
+  +--> ?PR?MAIN?04_数码_躝_蘝_允_
+
+?PR?MAIN?04_数码_躝_蘝_允_           0008H    0001H
+  +--> ?CO?04_数码_躝_蘝_允_
+  +--> ?PR?_DELAY?04_数码_躝_蘝_允_
+
+
+
+SYMBOL TABLE OF MODULE:  数码管动态显示 (04_数码_躝_蘝_允_)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        04_数码_躝_蘝_允_
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:002AH         PUBLIC        table
+  C:0003H         PUBLIC        main
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/06/2010  16:34:06  PAGE 2
+
+
+  C:003AH         PUBLIC        address
+  C:004EH         PUBLIC        _delay
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        m
+  -------         ENDDO         
+  C:0003H         LINE#         9
+  C:0003H         LINE#         10
+  C:0003H         LINE#         11
+  C:0006H         LINE#         12
+  C:0006H         LINE#         13
+  C:0006H         LINE#         14
+  C:000BH         LINE#         15
+  C:000EH         LINE#         16
+  C:0016H         LINE#         17
+  C:0021H         LINE#         18
+  C:0028H         LINE#         19
+  -------         ENDPROC       MAIN
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        m
+  C:004EH         LINE#         21
+  C:004EH         LINE#         22
+  C:004EH         LINE#         23
+  C:0058H         LINE#         24
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        04_数码_躝_蘝_允_
+
+Program Size: data=10.0 xdata=0 code=89
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

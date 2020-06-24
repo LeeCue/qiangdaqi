@@ -1,0 +1,38 @@
+C51 COMPILER V8.08   LIUSHUIDENG                                                           12/07/2011 09:18:26 PAGE 1   
+
+
+C51 COMPILER V8.08, COMPILATION OF MODULE LIUSHUIDENG
+OBJECT MODULE PLACED IN C:\Documents and Settings\Administrator\桌面\11\liushuideng.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ..\实验参考程序\综合设计程序\liushuideng.c BROWSE DEBUG OBJECTEXTEND PRINT(
+                    -.\liushuideng.lst) OBJECT(C:\Documents and Settings\Administrator\桌面\11\liushuideng.obj)
+
+line level    source
+
+   1          #include "liushuideng.h"
+   2          
+   3          unsigned char a,b,k=0xfe,j;
+   4          void delay10ms( )//延时子程序，大约10ms
+   5          {
+   6   1              for(a=255;a>0;a--)
+   7   1              for(b=225;b>0;b--);
+   8   1      }
+   9          void liushuideng( )
+  10          {
+  11   1              delay10ms();
+  12   1              j=_crol_(k,1);
+  13   1              P1=j;k=j;
+  14   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     35    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

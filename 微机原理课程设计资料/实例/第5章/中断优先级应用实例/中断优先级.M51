@@ -1,0 +1,145 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        04/07/2010  20:00:33  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE 中断优先级.obj TO 中断优先级 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  中断优先级.obj (謃__优_燃_)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  中断优先级 (謃__优_燃_)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     000CH     UNIT         ?C_C51STARTUP
+                    0012H     0001H                  *** GAP ***
+            CODE    0013H     0003H     ABSOLUTE     
+            CODE    0016H     0058H     UNIT         ?PR?INT_0?謃__优_燃_
+            CODE    006EH     002AH     UNIT         ?PR?INT_1?謃__优_燃_
+            CODE    0098H     001FH     UNIT         ?PR?_DELAY?謃__优_燃_
+            CODE    00B7H     0012H     UNIT         ?PR?MAIN?謃__优_燃_
+
+
+
+OVERLAY MAP OF MODULE:   中断优先级 (謃__优_燃_)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?PR?INT_0?謃__优_燃_
+  +--> ?PR?_DELAY?謃__优_燃_
+
+*** NEW ROOT ***************************************************
+
+?PR?INT_1?謃__优_燃_
+  +--> ?PR?_DELAY?謃__优_燃_
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP
+  +--> ?PR?MAIN?謃__优_燃_
+
+
+
+SYMBOL TABLE OF MODULE:  中断优先级 (謃__优_燃_)
+
+BL51 BANKED LINKER/LOCATER V5.03                                                      04/07/2010  20:00:33  PAGE 2
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        謃__优_燃_
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  B:00A8H.7       PUBLIC        EA
+  D:00B8H         PUBLIC        IP
+  C:00B7H         PUBLIC        main
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  C:00A5H         PUBLIC        _delay
+  C:0016H         PUBLIC        INT_0
+  C:006EH         PUBLIC        INT_1
+  C:00A0H         SYMBOL        L?0019
+  -------         PROC          L?0018
+  -------         ENDPROC       L?0018
+  C:00A0H         SYMBOL        L?0019
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        c
+  -------         DO            
+  D:0005H         SYMBOL        a
+  D:0006H         SYMBOL        b
+  -------         ENDDO         
+  C:00A5H         LINE#         3
+  C:00A5H         LINE#         4
+  C:00A5H         LINE#         6
+  C:00ABH         LINE#         7
+  C:00ADH         LINE#         8
+  C:00B6H         LINE#         9
+  -------         ENDPROC       _DELAY
+  -------         PROC          INT_0
+  C:0016H         LINE#         10
+  C:0023H         LINE#         12
+  C:0025H         LINE#         13
+  C:002AH         LINE#         14
+  C:002CH         LINE#         15
+  C:002CH         LINE#         16
+  C:002CH         LINE#         17
+  C:0034H         LINE#         18
+  C:003CH         LINE#         19
+  C:0044H         LINE#         20
+  C:004CH         LINE#         21
+  C:0054H         LINE#         22
+  C:005CH         LINE#         23
+  C:0064H         LINE#         24
+  C:006CH         LINE#         25
+  -------         ENDPROC       INT_0
+  -------         PROC          INT_1
+  C:006EH         LINE#         27
+  C:007BH         LINE#         29
+  C:007DH         LINE#         30
+  C:0082H         LINE#         31
+  C:0084H         LINE#         32
+  C:0087H         LINE#         33
+BL51 BANKED LINKER/LOCATER V5.03                                                      04/07/2010  20:00:33  PAGE 3
+
+
+  C:0087H         LINE#         34
+  C:008AH         LINE#         35
+  C:008AH         LINE#         36
+  C:008DH         LINE#         37
+  -------         ENDPROC       INT_1
+  -------         PROC          MAIN
+  C:00B7H         LINE#         38
+  C:00B7H         LINE#         39
+  C:00B7H         LINE#         40
+  C:00BAH         LINE#         41
+  C:00BCH         LINE#         42
+  C:00BFH         LINE#         43
+  C:00C1H         LINE#         44
+  C:00C3H         LINE#         45
+  C:00C5H         LINE#         46
+  C:00C7H         LINE#         47
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        謃__优_燃_
+
+Program Size: data=9.0 xdata=0 code=200
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

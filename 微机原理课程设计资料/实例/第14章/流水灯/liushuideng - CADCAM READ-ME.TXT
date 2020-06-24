@@ -1,0 +1,54 @@
+LABCENTER PROTEUS TOOL INFORMATION FILE
+=======================================
+
+In case of difficulty, please e-mail support@labcenter.co.uk
+
+Tool set up for Proteus layout 'liushuideng.LYT'.
+CADCAM generated at 22:10:46 on 2011Äê12ÔÂ7ÈÕ.
+
+File List
+---------
+Top Copper              : liushuideng - CADCAM Top Copper.TXT
+Bottom Copper           : liushuideng - CADCAM Bottom Copper.TXT
+Top Silk Screen         : liushuideng - CADCAM Top Silk Screen.TXT
+Top Solder Resist       : liushuideng - CADCAM Top Solder Resist.TXT
+Bottom Solder Resist    : liushuideng - CADCAM Bottom Solder Resist.TXT
+Drill                   : liushuideng - CADCAM Drill.TXT
+
+Photoplotter Setup
+------------------
+Format: RS274X, ASCII, 2.4, imperial, absolute, eob=*, LZO
+Notes:  D=Diameter, S=Side, W=Width, H=Height
+
+D10	CIRCLE	D=12th                                      DRAW
+D11	CIRCLE	D=50th                                      FLASH
+D12	CIRCLE	D=2.5th                                     DRAW
+D13	SQUARE	S=50th                                      FLASH
+D14	CIRCLE	D=150th                                     FLASH
+D15	CIRCLE	D=80th                                      FLASH
+D16	CIRCLE	D=70th                                      FLASH
+D17	SQUARE	S=80th                                      FLASH
+D18	CIRCLE	D=60th                                      FLASH
+D19	CIRCLE	D=132th                                     FLASH
+D70	CIRCLE	D=8th                                       DRAW
+D71	CIRCLE	D=20th                                      DRAW
+D20	CIRCLE	D=6th                                       DRAW
+D21	SMT	W=70th                H=70th                FLASH
+D22	CIRCLE	D=180th                                     FLASH
+D23	CIRCLE	D=100th                                     FLASH
+D24	CIRCLE	D=90th                                      FLASH
+D25	SMT	W=100th               H=100th               FLASH
+
+NC Drill Setup
+--------------
+Format: ASCII, 2.4, imperial, absolute, eob=<CR><LF>, no zero suppression.
+Notes:  Tool sizes are diameters. Layer sets are in brackets - 0=TOP, 15=BOTTOM, 1-14=INNER.
+
+T01	20th (0-15)
+T02	30th (0-15)
+T03	60th (0-15)
+T04	40th (0-15)
+T05	112th (0-15)
+
+
+[END OF FILE]

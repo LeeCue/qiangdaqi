@@ -1,0 +1,107 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        02/02/2010  17:04:18  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, 8255.obj TO 8255a
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  8255.obj (8255)
+
+
+LINK MAP OF MODULE:  8255a (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0029H     UNIT         ?PR?MAIN?8255
+            CODE    002CH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   8255a (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?8255
+
+
+
+SYMBOL TABLE OF MODULE:  8255a (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:002CH         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:002FH         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+BL51 BANKED LINKER/LOCATER V5.03                                                      02/02/2010  17:04:18  PAGE 2
+
+
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:002CH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:002CH         LINE#         99
+  C:002EH         LINE#         100
+  C:002FH         LINE#         101
+  C:0030H         LINE#         102
+  C:0032H         LINE#         151
+  C:0035H         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        8255
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0003H         PUBLIC        main
+  -------         PROC          MAIN
+  -------         DO            
+  D:0005H         SYMBOL        PORT_DATA
+  D:0006H         SYMBOL        pt
+  -------         ENDDO         
+  C:0003H         LINE#         8
+  C:0003H         LINE#         9
+  C:0003H         LINE#         12
+  C:0006H         LINE#         13
+  C:0012H         LINE#         14
+  C:0012H         LINE#         15
+  C:0012H         LINE#         16
+  C:001EH         LINE#         17
+  C:002AH         LINE#         18
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        8255
+
+Program Size: data=9.0 xdata=0 code=56
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,50 @@
+C51 COMPILER V8.08   LIUSHUIDENG                                                           12/03/2011 16:35:49 PAGE 1   
+
+
+C51 COMPILER V8.08, COMPILATION OF MODULE LIUSHUIDENG
+OBJECT MODULE PLACED IN liushuideng.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE liushuideng.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /****************************必要的变量定义********************************/
+   2          #include<reg51.h>
+   3          #include<intrins.h> //声明头文件，该头文件包含“_crol_”函数
+   4          #define uchar unsigned char
+   5          /******************************延时子程序**********************************/
+   6          void delay( )
+   7          {
+   8   1         uchar i,j;
+   9   1         for(i=200;i>0;i--)
+  10   1         for(j=150;j>0;j--);
+  11   1      }
+  12          /*********************************主程序***********************************/
+  13          void main( )
+  14          {
+  15   1        uchar i;
+  16   1        uchar temp=0x00;
+  17   1          P2=temp;
+  18   1          while(1)
+  19   1              {  
+  20   2                 P2=0x01;        //点亮与P2.0连接的LED灯
+  21   2                 for(i=0;i<8;i++)
+  22   2                 {
+  23   3                 P2=_crol_(P2,1);  //_crol_（）为循环移位函数，对P2存放的数值进行循环移位
+  24   3                 delay( );         //延时一段时间
+  25   3                 }
+  26   2              }
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     39    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

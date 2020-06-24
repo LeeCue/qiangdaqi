@@ -1,0 +1,105 @@
+C51 COMPILER V7.06   LCD1602                                                               01/26/2010 15:24:03 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN LCD1602.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE LCD1602.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg52.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar code table[]=" I  LOVE MCS  ";
+   5          uchar code table1[]="      NEUQ     ";
+   6          sbit lcden=P3^4;
+   7          sbit lcdrs=P3^5;
+   8          uchar num;
+   9          
+  10          
+  11          void delay(uint z)
+  12          {
+  13   1              uint x,y;
+  14   1              for(x=z;x>0;x--)
+  15   1                      for(y=110;y>0;y--);
+  16   1      }
+  17          void write_com(uchar com)
+  18          {
+  19   1              lcdrs=0;//写命令
+  20   1              P2=com;
+  21   1              delay(5);
+  22   1              lcden=1;
+  23   1              delay(5);
+  24   1              lcden=0;
+  25   1      }
+  26          
+  27          void write_data(uchar date)
+  28          {
+  29   1              lcdrs=1;//写数据
+  30   1              P2=date;
+  31   1              delay(5);
+  32   1              lcden=1;
+  33   1              delay(5);
+  34   1              lcden=0;
+  35   1      }
+  36          void init()
+  37          {
+  38   1              lcden=0;
+  39   1              write_com(0x38);//初始化
+  40   1              write_com(0x0e);//光标打开
+  41   1              write_com(0x06);
+  42   1              write_com(0x01);
+  43   1              write_com(0x80+0x1);
+  44   1      }
+  45          void main()
+  46          {
+  47   1              init();
+  48   1      delay(100);
+  49   1      EA=1;EX0=1;EX1=1;
+  50   1              while(1);
+  51   1      }
+  52          
+  53          void int0() interrupt 0
+  54          
+  55          {
+C51 COMPILER V7.06   LCD1602                                                               01/26/2010 15:24:03 PAGE 2   
+
+  56   1      
+  57   1      for(num=0;num<14;num++)//显示"Ying Ming Fei"
+  58   1              {
+  59   2                      write_data(table[num]);
+  60   2                      delay(20);
+  61   2              }
+  62   1              write_com(2);//回车换行
+  63   1              write_com(0x80+0x40);
+  64   1              for(num=0;num<16;num++)//显示"5071418"
+  65   1              {
+  66   2                      write_data(table1[num]);
+  67   2                      delay(20);
+  68   2              }
+  69   1      
+  70   1      }
+  71          
+  72          
+  73          void int1() interrupt 2
+  74          
+  75          {
+  76   1      
+  77   1      
+  78   1              write_com(1);//清屏
+  79   1      
+  80   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    243    ----
+   CONSTANT SIZE    =     31    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

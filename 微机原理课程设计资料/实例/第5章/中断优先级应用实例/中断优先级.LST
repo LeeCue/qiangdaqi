@@ -1,0 +1,73 @@
+C51 COMPILER V7.06   謃__优_燃_                                                            04/07/2010 20:00:33 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 謃__优_燃_
+OBJECT MODULE PLACED IN 中断优先级.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 中断优先级.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char             //宏定义
+   3          void delay(uchar c)                     //延时子程序 Cms,误差 0us
+   4          {
+   5   1          unsigned char a,b;
+   6   1          for(;c>0;c--)
+   7   1              for(b=142;b>0;b--)
+   8   1                  for(a=2;a>0;a--);
+   9   1      }
+  10          void INT_0() interrupt 0                        //外部中断0子程序
+  11          {
+  12   1       EX0=0;                                         //关闭外部中的，防止在执行再次中断
+  13   1       delay(20);                                     //延时20ms，去抖动
+  14   1       EX0=1;                                         //开外部中断0
+  15   1       while(1)                                       //led向下循环点亮，代表发生外部中断0
+  16   1       {
+  17   2              P1=0xFE;delay(200);
+  18   2              P1=0xFD;delay(200);
+  19   2              P1=0xFB;delay(200);
+  20   2              P1=0xF7;delay(200);
+  21   2              P1=0xEF;delay(200);
+  22   2              P1=0xDF;delay(200);
+  23   2              P1=0xBF;delay(200);
+  24   2              P1=0x7F;delay(200);
+  25   2      }
+  26   1      }
+  27          void INT_1() interrupt 2        //外部中断1子程序
+  28          {
+  29   1       EX1=0;                                         //关闭外部中的，防止在执行再次中断
+  30   1       delay(20);                                     //延时20ms，去抖动
+  31   1       EX1=1;                                         //开外部中断1
+  32   1       P1=0xFF;delay(200);            //led全部点亮，闪烁三次，代表发生外部中1
+  33   1       P1=0x00;delay(200);
+  34   1       P1=0xFF;delay(200);
+  35   1       P1=0x00;delay(200);
+  36   1       P1=0xFF;delay(200);
+  37   1      }
+  38          void main()              
+  39           {
+  40   1              P1=0x00;
+  41   1              EX0=1;                                  //打开外部中断0
+  42   1              IP=0x04;                                //外部中断1为优先级
+  43   1              IT0=1;                                  //设置中断触发方式为下降沿触发方式
+  44   1              EX1=1;
+  45   1              IT1=1;
+  46   1              EA=1;                                   //打开总中断
+  47   1        while(1);                                     //死循环
+  48   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    179    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V7.06   謃__优_燃_                                                            04/07/2010 20:00:33 PAGE 2   
+
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

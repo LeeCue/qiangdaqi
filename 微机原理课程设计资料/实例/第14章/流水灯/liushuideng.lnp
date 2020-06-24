@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"liushuideng.obj" 
+TO "liushuideng" 
+RAMSIZE(256) 

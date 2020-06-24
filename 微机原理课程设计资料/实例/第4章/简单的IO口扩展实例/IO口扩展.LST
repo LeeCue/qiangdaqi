@@ -1,0 +1,54 @@
+C51 COMPILER V7.06   IO口繽誣                                                              04/09/2010 00:30:49 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE IO口繽誣
+OBJECT MODULE PLACED IN IO口扩展.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE IO口扩展.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          sbit  com=P3^0;         //位定义P3.0为输入和输出的控制的公共位    
+   4          sbit  wr=P3^6;                  // 位定义P3.6为输出控制位     
+   5          sbit  rd=P3^7;                  //位定义P3.7为输入控制位  
+   6          /*********************************延时子程序**********************************/
+   7          void delay(void)                
+   8          {
+   9   1        uchar i,j;
+  10   1        for(i=30;i>0;i--)
+  11   1        for(j=30;j>0;j--);
+  12   1      }
+  13          /**********************************主程序*************************************/
+  14          void main()              
+  15          { 
+  16   1          while(1)
+  17   1        {
+  18   2         uchar temp;          //中间变量
+  19   2         P0=0xff;             //先拉高P0口即关闭LED灯 
+  20   2         com=0;
+  21   2         rd=0;                //开启74LS244单片机输入数据 
+  22   2         temp=P0;     //把输入的数据暂时赋给中间变量
+  23   2         rd=1;                //关闭74LS244
+  24   2         wr=1;        //开启74LS373
+  25   2         P0=temp;     //通过74LS373单片机输出数据
+  26   2              wr=0;
+  27   2         delay(); 
+  28   2         }
+  29   1      }
+  30          
+  31                          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     33    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

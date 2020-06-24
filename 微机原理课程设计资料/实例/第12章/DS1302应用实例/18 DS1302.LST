@@ -1,0 +1,160 @@
+C51 COMPILER V6.12  18_DS1302                                                              07/18/2009 11:55:14 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 18_DS1302
+OBJECT MODULE PLACED IN .\18 DS1302.OBJ
+COMPILER INVOKED BY: F:\我的文件\keil\Keil\C51\BIN\C51.EXE .\18 DS1302.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar code write_address[]={0x80,0x82,0x84,0x86,0x88,0x8a,0x8c}; 
+   5          uchar code read_address[]={0x81,0x83,0x85,0x87,0x89,0x8b,0x8d};
+   6          uchar code table[]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6};
+   7          uchar date[]={0x01,0x01,0x01,0x09,0x05,0x02,0x12};
+   8          uchar date1[]={0x01,0x01,0x01,0x09,0x05,0x02,0x12};
+   9          sbit RST=P3^0;     
+  10          sbit SCL=P3^1;		
+  11          sbit SDA=P3^2;		
+  12          sbit  ACC7 = ACC^7;
+  13          uchar temp,byte;
+  14          
+  15          void delay(uint m)
+  16          {
+  17   1      	while(m--);
+  18   1      }
+  19          
+  20          void write_byte(uchar byte)  
+  21          {
+  22   1       uchar m;
+  23   1       for(m=0;m<8;m++)     	//先传低位
+  24   1        { 
+  25   2      	byte>>=1;
+  26   2          SCL=0;
+  27   2          SDA=CY;     	
+  28   2          SCL=1;
+  29   2        }
+  30   1      }   
+  31          
+  32          uchar read_byte(void)	            //读一个字节
+  33          {
+  34   1       	uchar m;
+  35   1      	for(m=0;m<8;m++)      //先传低位
+  36   1      	{
+  37   2      	 ACC=ACC>>1;	   
+  38   2      	 ACC7=SDA;
+  39   2      	 SCL=1;
+  40   2      	 SCL=0;	
+  41   2      	}
+  42   1      	return (ACC);			//返回
+  43   1      }
+  44          
+  45          void write_1302(uchar address,uchar date)   //发送地址和数据  
+  46          {
+  47   1       	RST=0;
+  48   1       	SCL=0;
+  49   1       	RST=1;	               //启动
+  50   1       	write_byte(address);	
+  51   1       	write_byte(date);	
+  52   1       	RST=0;  	        	//恢复
+  53   1      }
+  54          
+  55          read_data(uchar address)		    //读取日历
+C51 COMPILER V6.12  18_DS1302                                                              07/18/2009 11:55:14 PAGE 2   
+
+  56          {
+  57   1       uchar temp;
+  58   1       RST=0;
+  59   1       SCL=0;
+  60   1       RST=1;       	        
+  61   1       write_byte(address|0x01);
+  62   1       temp=read_byte();
+  63   1       SCL=1;
+  64   1       RST=0;	   
+  65   1       return(temp); 
+  66   1      }
+  67          
+  68          void read_time()
+  69          {
+  70   1       uchar m,temp3,temp1,temp2;
+  71   1       temp3=0x80;
+  72   1       for(m=0;m<7;m++) 
+  73   1       {
+  74   2        temp1=read_data(temp3);
+  75   2        temp2=temp1; 
+  76   2        date[m]=(temp1>>1)&0x0f;     //取1，2，3，4位
+  77   2        date1[m]=(temp2>>5)&0x07;    //取5，6，7位
+  78   2        temp3=temp3+0x02;
+  79   2       }	 
+  80   1      }
+  81             
+  82          void set_RTC(void)		    //设定日历
+  83          {
+  84   1      	uchar m;
+  85   1       	write_1302(0x8E,0x00);	
+  86   1       	for(m=0;m<7;m++)		//7次写入年月日时分秒星期
+  87   1       	{
+  88   2      	 write_1302(write_address[m],date[m]);
+  89   2      	}
+  90   1      	write_1302(0x8E,0x80);
+  91   1      }
+  92          
+  93          void main(void)             //入口函数
+  94          {
+  95   1      	RST=0;
+  96   1      	set_RTC();
+  97   1      	while(1)
+  98   1      	{
+  99   2           read_time();	
+ 100   2      
+ 101   2      	 P2=0xfe;
+ 102   2      	 P1=table[date[0]%10];
+ 103   2      	 delay(500);
+ 104   2      
+ 105   2      	 P2=0xfd;
+ 106   2      	 P1=table[date1[0]%10];
+ 107   2      	 delay(500);
+ 108   2      
+ 109   2      	 P2=0xfb;
+ 110   2      	 P1=0x02;
+ 111   2      	 delay(500);
+ 112   2      
+ 113   2      	 P2=0xf7;
+ 114   2      	 P1=table[date[1]%10];
+ 115   2      	 delay(500);
+ 116   2      
+ 117   2      	 P2=0xef;
+C51 COMPILER V6.12  18_DS1302                                                              07/18/2009 11:55:14 PAGE 3   
+
+ 118   2      	 P1=table[date1[1]%10];
+ 119   2      	 delay(500);
+ 120   2      
+ 121   2      	 P2=0xdf;
+ 122   2      	 P1=0x02;
+ 123   2      	 delay(500);
+ 124   2      
+ 125   2      	 P2=0xbf;
+ 126   2      	 P1=table[date[2]%10];
+ 127   2      	 delay(500);
+ 128   2      
+ 129   2      	 P2=0x7f;
+ 130   2      	 P1=table[date1[2]%10];
+ 131   2      	 delay(500);	
+ 132   2         }
+ 133   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    262    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     16    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

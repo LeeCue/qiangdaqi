@@ -1,0 +1,157 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/27/2010  14:10:22  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, PWMµ÷ÖÆ.obj TO PWMµ÷ÖÆ
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  PWMµ÷ÖÆ.obj (PWM_÷ÖÆ)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  PWMµ÷ÖÆ (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?PWM_÷ÖÆ
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0092H     001AH     UNIT         ?PR?_DELAY?PWM_÷ÖÆ
+            CODE    00ACH     0015H     UNIT         ?PR?INT?PWM_÷ÖÆ
+            CODE    00C1H     0013H     UNIT         ?PR?_PWMOUT?PWM_÷ÖÆ
+            CODE    00D4H     000DH     UNIT         ?PR?MAIN?PWM_÷ÖÆ
+            CODE    00E1H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   PWMµ÷ÖÆ (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?PWM_÷ÖÆ
+  +--> ?C_INITSEG
+
+?PR?MAIN?PWM_÷ÖÆ
+  +--> ?PR?_PWMOUT?PWM_÷ÖÆ
+
+?PR?_PWMOUT?PWM_÷ÖÆ
+  +--> ?PR?_DELAY?PWM_÷ÖÆ
+
+
+
+SYMBOL TABLE OF MODULE:  PWMµ÷ÖÆ (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/27/2010  14:10:22  PAGE 2
+
+
+
+  -------         MODULE        ?C_STARTUP
+  C:0006H         SEGMENT       ?C_C51STARTUP
+  I:0009H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0009H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0006H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0006H         LINE#         99
+  C:0008H         LINE#         100
+  C:0009H         LINE#         101
+  C:000AH         LINE#         102
+  C:000CH         LINE#         151
+  C:000FH         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        PWM_÷ÖÆ
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  C:00D4H         PUBLIC        main
+  C:00C1H         PUBLIC        _PWMout
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  C:00ACH         PUBLIC        INT
+  D:0008H         PUBLIC        n
+  C:0092H         PUBLIC        _delay
+  B:00A0H.0       PUBLIC        PWM
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        m
+  -------         DO            
+  D:0004H         SYMBOL        a
+  D:0005H         SYMBOL        b
+  D:0006H         SYMBOL        c
+  -------         ENDDO         
+  C:0092H         LINE#         6
+  C:0092H         LINE#         7
+  C:0092H         LINE#         9
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/27/2010  14:10:22  PAGE 3
+
+
+  C:0098H         LINE#         10
+  C:00A0H         LINE#         11
+  C:00A2H         LINE#         12
+  C:00ABH         LINE#         13
+  -------         ENDPROC       _DELAY
+  -------         PROC          _PWMOUT
+  D:0003H         SYMBOL        q
+  C:00C1H         LINE#         14
+  C:00C3H         LINE#         15
+  C:00C3H         LINE#         16
+  C:00C5H         LINE#         17
+  C:00CDH         LINE#         18
+  C:00CFH         LINE#         19
+  -------         ENDPROC       _PWMOUT
+  -------         PROC          MAIN
+  C:00D4H         LINE#         21
+  C:00D4H         LINE#         22
+  C:00D4H         LINE#         23
+  C:00D6H         LINE#         24
+  C:00D8H         LINE#         25
+  C:00DAH         LINE#         26
+  C:00DAH         LINE#         27
+  -------         ENDPROC       MAIN
+  -------         PROC          INT
+  C:00ACH         LINE#         29
+  C:00B0H         LINE#         31
+  C:00BAH         LINE#         32
+  C:00BCH         LINE#         33
+  -------         ENDPROC       INT
+  -------         ENDMOD        PWM_÷ÖÆ
+
+Program Size: data=10.0 xdata=0 code=229
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,62 @@
+C51 COMPILER V7.06   外部謃__                                                              01/15/2010 12:17:57 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 外部謃__
+OBJECT MODULE PLACED IN 外部中断.OBJ
+COMPILER INVOKED BY: C:\Program Files\keilc\C51\BIN\C51.EXE 外部中断.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char//宏定义
+   4          uchar code table[]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};//共阴数码管"0-9"编码表
+   5          uchar m=0;
+   6          void delay(uchar c)   //延时子程序 Cms,误差 0us
+   7          {
+   8   1          unsigned char a,b;
+   9   1          for(;c>0;c--)
+  10   1              for(b=142;b>0;b--)
+  11   1                  for(a=2;a>0;a--);
+  12   1      }
+  13          void INT_0() interrupt 0//外部中断0函数
+  14          {
+  15   1       EX0=0;                 //关闭外部中的，防止在执行再次中断
+  16   1       delay(20);     //延时500ms，去抖动
+  17   1       EX0=1;                 //开中断
+  18   1       if(m==10) m=0; //当m=10时回到0
+  19   1       else P1=table[m++];//循环输出"0-9"
+  20   1      }
+  21          void INT_1() interrupt 2//外部中断0函数
+  22          {
+  23   1       EX1=0;                 //关闭外部中的，防止在执行再次中断
+  24   1       delay(20);     //延时500ms，去抖动
+  25   1       EX1=1;                 //开中断
+  26   1       if(m==0) m=10; //当m=0时回到10
+  27   1       else P1=table[--m];//循环输出"0-9"
+  28   1      }
+  29          void main()              
+  30           {
+  31   1              P1=0x00;
+  32   1              EA=1;           //打开总中断
+  33   1              EX0=1;  //打开外部中断0
+  34   1              IT0=1;  //设置中断触发方式为下降沿触发方式
+  35   1              EX1=1;
+  36   1              IT1=1;
+  37   1        while(1);     //死循环
+  38   1      }
+  39          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    155    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

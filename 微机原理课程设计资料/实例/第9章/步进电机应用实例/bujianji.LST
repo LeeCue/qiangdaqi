@@ -1,0 +1,104 @@
+C51 COMPILER V7.06   BUJIANJI                                                              01/02/2010 12:38:04 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE BUJIANJI
+OBJECT MODULE PLACED IN bujianji.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE bujianji.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          unsigned char index=0;//步进索引
+   3          int n=0,n0=211;//设置周期、档次位
+   4          unsigned char flag=0,step=0;//设置方向、停止键
+   5          main()
+   6          {
+   7   1      P3=0xff;
+   8   1      EA=1;
+   9   1      EX0=1;EX1=1;
+  10   1      ET0=1;
+  11   1      IT0=1;IT1=1;
+  12   1      TMOD=0x01;
+  13   1      TR0=1;
+  14   1      TH0=-1000/256;
+  15   1      TL0=-1000%256;//每1ms中断一次
+  16   1      while(1)
+  17   1      {
+  18   2      if(P0==0xfe){n0=70;P2=1;}//1档
+  19   2      if(P0==0xfd){n0=90;P2=2;}//2档
+  20   2      if(P0==0xfb){n0=110;P2=3;}//3档
+  21   2      if(P0==0xf7){n0=150;P2=4;}//4档
+  22   2      }
+  23   1      }
+  24          
+  25          void int0() interrupt 0//停止键
+  26          {
+  27   1      step=step+1;
+  28   1      if(step>=2)step=0;
+  29   1      }
+  30          
+  31          void int1() interrupt 2//方向键
+  32          {
+  33   1      flag++;
+  34   1      if(flag==2)flag=0;
+  35   1      }
+  36          
+  37          void time() interrupt 1
+  38          {
+  39   1      TH0=-1000/256;
+  40   1      TL0=-1000%256;
+  41   1      
+  42   1      if(step==1)///停止控制键
+  43   1      {
+  44   2      if(n>=n0)//周期:n0x1ms
+  45   2      {               
+  46   3                      if(flag==0)//正转
+  47   3                      {switch(index)
+  48   4                      {
+  49   5                      case 0:P1=0x03;break;
+  50   5                      case 1:P1=0x06;break;
+  51   5                      case 2:P1=0x0c;break;
+  52   5                      case 3:P1=0x09;break;
+  53   5                      }
+  54   4                      index++;
+  55   4                      if(index==4)index=0;//转一圈index回到0，下一次重新开始
+C51 COMPILER V7.06   BUJIANJI                                                              01/02/2010 12:38:04 PAGE 2   
+
+  56   4                      n=0;
+  57   4                      }
+  58   3                              if(flag==1) //反转
+  59   3                              {
+  60   4                              switch(index)
+  61   4                              {
+  62   5                              case 0:P1=0x09;break;
+  63   5                              case 1:P1=0x0c;break;
+  64   5                              case 2:P1=0x06;break;
+  65   5                              case 3:P1=0x03;break;
+  66   5                              }index++;
+  67   4                              if(index==4)index=0;//转一圈index回到0，下一次重新开始
+  68   4                              n=0;
+  69   4                              }
+  70   3                      else n=0;
+  71   3              }
+  72   2      n++;//每次中断 n+1      
+  73   2              
+  74   2      }
+  75   1      
+  76   1      else n=0;//停止
+  77   1      
+  78   1      
+  79   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    298    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

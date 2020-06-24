@@ -1,0 +1,191 @@
+C51 COMPILER V7.06   16_AT24C02                                                            01/31/2010 11:16:49 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 16_AT24C02
+OBJECT MODULE PLACED IN 16 AT24C02.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 16 AT24C02.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar code table[]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6,0xee,0x3e,0x9c,0x7a,0x9e,0x8e};
+   5          sbit sda=P3^1;
+   6          sbit scl=P3^0;
+   7          bit flag=0;                             //用户蹲渊义定时溢出标志位
+   8          uchar sec,tcnt;                 //秒变量sec，定时中断计数变量tcnt
+   9          void delay()                    //短延时，两个机器周期,做总线的延时用
+  10          {;;}
+  11          void delay1ms(uint m)   //长延时，做数码管显示延时用
+  12          {
+  13   1              uint x,y;
+  14   1              for(x=m;x>0;x--)
+  15   1              for(y=110;y>0;y--);
+  16   1      }
+  17          void start()                    //开始信号
+  18          {               
+  19   1              sda=1;
+  20   1              delay();
+  21   1              scl=1;
+  22   1              delay();
+  23   1              sda=0;
+  24   1              delay(); 
+  25   1              } 
+  26          
+  27          void stop()                     //停止
+  28          {       
+  29   1              sda=0;
+  30   1              delay();    
+  31   1              scl=1;
+  32   1              delay();
+  33   1              sda=1;
+  34   1              delay();
+  35   1      }
+  36          
+  37          void respons()                  //应答
+  38          {
+  39   1              uchar i;
+  40   1              scl=1;
+  41   1              delay();
+  42   1              while((sda==1)&&(i<250))
+  43   1              i++;
+  44   1              scl=0;
+  45   1              delay();
+  46   1      }
+  47          void write_byte(uchar date)    //写数据
+  48          {
+  49   1              uchar i,temp;
+  50   1              temp=date;
+  51   1              for(i=0;i<8;i++)
+  52   1              {
+  53   2              temp=temp<<1;
+  54   2              scl=0;
+  55   2              delay();
+C51 COMPILER V7.06   16_AT24C02                                                            01/31/2010 11:16:49 PAGE 2   
+
+  56   2              sda=CY;
+  57   2              delay();
+  58   2              scl=1;
+  59   2              delay();
+  60   2              }       
+  61   1      scl=0;delay();
+  62   1      sda=1;delay();
+  63   1      }
+  64          uchar read_byte()         //读数据
+  65          {
+  66   1      
+  67   1      uchar i,k;
+  68   1      scl=0;
+  69   1      delay();
+  70   1      sda=1;
+  71   1      delay();
+  72   1      for(i=0;i<8;i++)
+  73   1      {
+  74   2      scl=1;
+  75   2      delay();
+  76   2      k=(k<<1)|sda;
+  77   2      scl=0;
+  78   2      delay();
+  79   2      }
+  80   1      return k;
+  81   1      }
+  82          
+  83          void write_add(uchar address,uchar date)   //写地址
+  84          {
+  85   1              start();
+  86   1              write_byte(0xa0);
+  87   1              respons();
+  88   1              write_byte(address);
+  89   1              respons();
+  90   1              write_byte(date);
+  91   1              respons();
+  92   1              stop();
+  93   1      }
+  94          
+  95          uchar read_add(uchar address)          //读地址
+  96          {  uchar byte;
+  97   1              start();
+  98   1              write_byte(0xa0);
+  99   1              respons();
+ 100   1              write_byte(address);
+ 101   1              respons();
+ 102   1              start();
+ 103   1              write_byte(0xa1);
+ 104   1              respons();
+ 105   1              byte=read_byte();
+ 106   1              stop();
+ 107   1              return byte;
+ 108   1      }
+ 109          void Disp( )                                            //数码管显示
+ 110                  {
+ 111   1           P2=0xfe;
+ 112   1               P1=table[sec%10];
+ 113   1               delay1ms(5);
+ 114   1           P2=0xfd;
+ 115   1           P1=table[sec/10%10];
+ 116   1           delay1ms(5);         
+ 117   1           P2=0xfb;
+C51 COMPILER V7.06   16_AT24C02                                                            01/31/2010 11:16:49 PAGE 3   
+
+ 118   1           P1=table[sec/100];
+ 119   1           delay1ms(5);       
+ 120   1              }
+ 121          void init()                                                     //初始化
+ 122          {
+ 123   1      sda=1;
+ 124   1      delay();
+ 125   1      scl=1;
+ 126   1      delay();
+ 127   1      }
+ 128          void main()
+ 129          {    
+ 130   1              init();
+ 131   1              sec=0;
+ 132   1              TMOD=0x01;
+ 133   1              ET0=1;
+ 134   1              EA=1;
+ 135   1              TH0=(65536-50000)/256;
+ 136   1              TL0=(65536-50000)%256;
+ 137   1              TR0=1;
+ 138   1              while(1)
+ 139   1              {
+ 140   2              Disp();
+ 141   2                      if(flag==1)
+ 142   2                      {
+ 143   3                      flag=0;
+ 144   3                      write_add(2,sec);
+ 145   3                      }
+ 146   2              }
+ 147   1      }
+ 148          
+ 149          void time() interrupt 1
+ 150          {
+ 151   1              TH0=(65536-50000)/256;
+ 152   1              TL0=(65536-50000)%256;
+ 153   1              tcnt++;
+ 154   1              if(tcnt==20)
+ 155   1              {
+ 156   2              tcnt=0;         //tcnt每到达一次20，tcnt重新开始计时，将时间控制在1s
+ 157   2              sec++;
+ 158   2              flag=1;
+ 159   2              if(sec==60)//sec控制在59
+ 160   2              sec=0;
+ 161   2              }
+ 162   1      
+ 163   1      }
+ 164          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    356    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

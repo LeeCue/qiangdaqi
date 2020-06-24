@@ -1,0 +1,55 @@
+C51 COMPILER V6.12  8______鱛衉_                                                           07/18/2009 11:20:56 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 8______鱛衉_
+OBJECT MODULE PLACED IN .\8 定时器中断.OBJ
+COMPILER INVOKED BY: F:\我的文件\keil\Keil\C51\BIN\C51.EXE .\8 定时器中断.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          sbit LED=P1^0;
+   5          bit flag;
+   6          uchar count=0;
+   7          void main(void)
+   8          {
+   9   1      	TMOD=0x01;
+  10   1      	TH0=(65536-50000)/256;
+  11   1      	TL0=(65536-50000)%256;
+  12   1      	EA=1;   //开总中断
+  13   1      	ET0=1;  //开定时/计数器0	 
+  14   1          TR0=1;  //启动定时/计数器0
+  15   1      	while(1)
+  16   1           {
+  17   2            if(flag==1)
+  18   2            LED=0;
+  19   2           }
+  20   1      }
+  21          
+  22          void int_fun1(void) interrupt 1  //使数码管加一
+  23          {
+  24   1        TH0=(65536-50000)/256;
+  25   1        TL0=(65536-50000)%256;
+  26   1        count++;
+  27   1        if(count>=20)
+  28   1        {
+  29   2          count=0;
+  30   2          flag=1;
+  31   2        }
+  32   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     51    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,41 @@
+LABCENTER PROTEUS TOOL INFORMATION FILE
+=======================================
+
+In case of difficulty, please e-mail support@labcenter.co.uk
+
+Tool set up for Proteus layout 'GERBVIEW.LYT'.
+CADCAM generated at 19:45:17 on 2010Äê3ÔÂ25ÈÕ.
+
+File List
+---------
+Top Copper              : GERBVIEW - CADCAM Top Copper.TXT
+Bottom Copper           : GERBVIEW - CADCAM Bottom Copper.TXT
+Top Silk Screen         : GERBVIEW - CADCAM Top Silk Screen.TXT
+Bottom Silk Screen      : GERBVIEW - CADCAM Bottom Silk Screen.TXT
+Top Solder Resist       : GERBVIEW - CADCAM Top Solder Resist.TXT
+Bottom Solder Resist    : GERBVIEW - CADCAM Bottom Solder Resist.TXT
+Drill                   : GERBVIEW - CADCAM Drill.TXT
+
+Photoplotter Setup
+------------------
+Format: RS274X, ASCII, 2.4, imperial, absolute, eob=*, LZO
+Notes:  D=Diameter, S=Side, W=Width, H=Height
+
+D10	CIRCLE	D=12th                                      DRAW
+D11	CIRCLE	D=10th                                      DRAW
+D12	CIRCLE	D=2.5th                                     DRAW
+D13	SQUARE	S=50th                                      FLASH
+D14	CIRCLE	D=50th                                      FLASH
+D15	CIRCLE	D=80th                                      FLASH
+D16	CIRCLE	D=70th                                      FLASH
+D17	SQUARE	S=80th                                      FLASH
+D18	CIRCLE	D=8th                                       DRAW
+
+NC Drill Setup
+--------------
+Format: ASCII, 2.4, imperial, absolute, eob=<CR><LF>, no zero suppression.
+Notes:  Tool sizes are diameters. Layer sets are in brackets - 0=TOP, 15=BOTTOM, 1-14=INNER.
+
+
+
+[END OF FILE]

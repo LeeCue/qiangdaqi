@@ -1,0 +1,47 @@
+C51 COMPILER V7.06   3_数码_躝蔡__允_                                                      01/06/2010 16:14:15 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 3_数码_躝蔡__允_
+OBJECT MODULE PLACED IN 3 数码管静态显示.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 3 数码管静态显示.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char             
+   4          void delay(uint);
+   5          uchar code table[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0x88,0x83,0xc6,0xa1,0x86,0x8e};
+   6          void main()              
+   7          {
+   8   1      uchar m=0;                              //显示从"0"开始
+   9   1               while(1)
+  10   1               {
+  11   2                if(m==16) m=0;//如当m==16时，回到0，重新开始。
+  12   2                P1=table[m++];//循环一次，m+1.
+  13   2                delay(1000);  //延时显示数码管
+  14   2               }
+  15   1      }
+  16          
+  17          
+  18          void delay(uint k)   //误差 0us
+  19          {
+  20   1          unsigned char a,b;
+  21   1          for(;k>0;k--)
+  22   1              for(b=142;b>0;b--)
+  23   1                  for(a=2;a>0;a--);
+  24   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     56    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

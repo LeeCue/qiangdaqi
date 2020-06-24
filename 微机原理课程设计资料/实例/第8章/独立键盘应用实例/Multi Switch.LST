@@ -1,0 +1,49 @@
+C51 COMPILER V7.06   MULTI_SWITCH                                                          01/05/2010 22:59:05 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE MULTI_SWITCH
+OBJECT MODULE PLACED IN Multi Switch.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE Multi Switch.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uint unsigned int
+   3          #define uchar unsigned char             
+   4          uchar code table[]={0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6,0xee,0x3e,0x9c,0x7a,0x9e,0x8e};
+   5          uchar num=0;
+   6          sbit led0=P1^0;
+   7          sbit led1=P1^1;
+   8          sbit led2=P1^2;
+   9          sbit led3=P1^3;
+  10          sbit key0=P1^4;
+  11          sbit key1=P1^5;
+  12          sbit key2=P1^6;
+  13          sbit key3=P1^7;
+  14          void delay(uint k)//ÑÓÊ±×Ó³ÌÐò
+  15          {
+  16   1              uint i,j;
+  17   1              for(i=7;i<k;i++)
+  18   1                      for(j=0;j<124;j++);
+  19   1      }
+  20          void main()              
+  21           {
+  22   1        while(1)
+  23   1        {
+  24   2          led0=key0;led1=key1;led2=key2;led3=key3;
+  25   2        }
+  26   1       }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     51    ----
+   CONSTANT SIZE    =     15    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

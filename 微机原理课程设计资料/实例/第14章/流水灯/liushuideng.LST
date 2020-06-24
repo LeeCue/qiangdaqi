@@ -1,0 +1,50 @@
+C51 COMPILER V8.18   LIUSHUIDENG                                                           03/19/2010 23:15:21 PAGE 1   
+
+
+C51 COMPILER V8.18, COMPILATION OF MODULE LIUSHUIDENG
+OBJECT MODULE PLACED IN liushuideng.OBJ
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE liushuideng.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include<intrins.h>
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          void Delay1ms(uint count)
+   7          {
+   8   1            uint  i,j;
+   9   1              for(i=0;i<count;i++)
+  10   1              for(j=0;j<120;j++);
+  11   1      }
+  12          
+  13          main()
+  14          {     uchar i;
+  15   1            uchar temp=0xfe;
+  16   1              while(1)
+  17   1              {     
+  18   2                  P1=temp;
+  19   2                  for(i=0;i<8;i++)
+  20   2                  {
+  21   3                     temp=_crol_(temp,1);
+  22   3                                      Delay1ms(1000);
+  23   3                     P1=temp;
+  24   3                  }
+  25   2                      Delay1ms(1000);
+  26   2              }
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     76    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

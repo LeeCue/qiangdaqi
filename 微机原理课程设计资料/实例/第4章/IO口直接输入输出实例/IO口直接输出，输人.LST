@@ -1,0 +1,43 @@
+C51 COMPILER V7.06   IO口謃接蔩_鯻_蔩人                                                    01/15/2010 11:37:41 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE IO口謃接蔩_鯻_蔩人
+OBJECT MODULE PLACED IN IO口直接输出，输人.OBJ
+COMPILER INVOKED BY: C:\Program Files\keilc\C51\BIN\C51.EXE IO口直接输出，输人.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uint unsigned int
+   3          void delay()                    // 延时子程序 
+   4          {  uint i,j;
+   5   1         for(i=10;i>0;i--)
+   6   1         for(j=1000;j>0;j--);
+   7   1      }
+   8          void main()                     //主函数 
+   9          {
+  10   1              while(1)
+  11   1              {
+  12   2          P2=0xff;                    // P2口全部赋高电平
+  13   2              if(P2!=0x0f)    //开关1被按下 
+  14   2                      {
+  15   3                      P2=P2<<4;               //移位运算，向左移动4位
+  16   3                      delay();                //将读入的四个开关状态送给四个LED
+  17   3                      }
+  18   2              }
+  19   1      }
+  20          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     48    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

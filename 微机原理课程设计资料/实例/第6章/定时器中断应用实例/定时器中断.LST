@@ -1,0 +1,66 @@
+C51 COMPILER V8.08   ¶¨Ê±Æ÷_Ð¶Ï                                                            12/03/2011 16:18:14 PAGE 1   
+
+
+C51 COMPILER V8.08, COMPILATION OF MODULE ¶¨Ê±Æ÷_Ð¶Ï
+OBJECT MODULE PLACED IN ¶¨Ê±Æ÷ÖÐ¶Ï.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ¶¨Ê±Æ÷ÖÐ¶Ï.c DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          sbit LED=P1^0;//È¡P1.0¿Ú×öÎªµãÁÁ·¢¹â¶þ¼¶¹ÜµÄÊä³öÐÅºÅ
+   5          bit flag;//±êÖ¾Î»£¬±êÖ¾ÊÇ·ñ·¢ÉúÖÐ¶Ï
+   6          uchar count=0;
+   7          void delay(uchar c)   //ÑÓÊ±º¯Êý Cms,Îó²î 0us
+   8          {
+   9   1          unsigned char a,b;
+  10   1          for(;c>0;c--)
+  11   1              for(b=142;b>0;b--)
+  12   1                  for(a=2;a>0;a--);
+  13   1      }
+  14          void main(void)
+  15          {
+  16   1              TMOD=0x01;//ÉèÖÃ¶¨Ê±Æ÷0Îª¶¨Ê±Ä£Ê½1
+  17   1              TH0=(65536-50000)/256;
+  18   1              TL0=(65536-50000)%256;//¸ø¶¨Ê±Æ÷0¸³Öµ³õÎª50ms
+  19   1              EA=1;   //¿ª×ÜÖÐ¶Ï
+  20   1              ET0=1;  //¿ª¶¨Ê±/¼ÆÊýÆ÷0         
+  21   1          TR0=1;  //Æô¶¯¶¨Ê±/¼ÆÊýÆ÷0
+  22   1              while(1)
+  23   1           {
+  24   2           if(flag==1)
+  25   2           {LED=0;
+  26   3               delay(100);//ÑÓÊ±100ms
+  27   3               LED=1;
+  28   3               flag=0;
+  29   3               }
+  30   2           }
+  31   1      }
+  32          
+  33          void time0(void) interrupt 1  //Ê¹ÊýÂë¹Ü¼ÓÒ»
+  34          {
+  35   1        TH0=(65536-50000)/256;
+  36   1        TL0=(65536-50000)%256;
+  37   1        count++;
+  38   1        if(count>=20)
+  39   1        {
+  40   2          count=0;
+  41   2          flag=1;
+  42   2        }
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     78    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

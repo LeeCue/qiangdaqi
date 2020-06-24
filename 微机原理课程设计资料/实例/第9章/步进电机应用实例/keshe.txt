@@ -1,0 +1,132 @@
+        MiSpeed	        EQU 25
+	MaSpeed  	EQU 100
+	Speed		DATA 23H
+	LoopDJ		DATA 24H
+	WorkState	bit 01H
+	HidNum		EQU 10H
+	Counter		DATA 57H
+	ShowData 	DATA 58H
+
+
+	ORG 		0000H
+	AJMP 		START
+	ORG 		000BH
+	JMP 		T0INT	
+	ORG 		001BH
+	JMP 		T1INT
+	ORG 		0040H
+START:
+	MOV 		SP,#5FH
+	MOV 		P1,#0FFH
+
+	MOV 		LoopDJ,#0F7H
+	MOV 		SPEED,#MiSpeed
+	CLR 		WorkState
+	MOV 		TMOD,#11H
+	MOV 		TH0,#0F4H
+	MOV 		TL0,#48H
+	MOV 		TH1,#0FFH
+	MOV 		TL1,#0FFH
+
+	SETB 		EA
+	SETB 		ET0
+	SETB 		ET1
+	SETB 		TR0
+	MOV 		A,#HidNum
+	MOV 		ShowData,A
+	MOV 		ShowData+1,A
+	MOV 		ShowData+2,A
+
+Mainlop:
+	ACALL KEY
+	JNB F0,Sta1
+	ACALL ViewKEY
+Sta1:
+	MOV A,SPEED
+	MOV B,#10
+	DIV AB
+	MOV ShowData+5,B
+	MOV B,#10
+	DIV AB
+	MOV ShowData+4,B
+	MOV ShowData+3,A
+	JB  WorkState,Sta2
+	CLR TR1
+	JMP MainLop
+	ORL P1,#0F0H
+Sta2:
+	SETB TR1
+	AJMP MainLop
+ViewKEY:
+	MOV A,B
+	JB ACC.2,StartStop
+	JB ACC.3,KeySty
+	JB ACC.4,SpdUp
+	JB ACC.5,SpdDown
+	AJMP KEY_RET
+StartStop:
+	SETB WorkState
+	AJMP KEY_RET
+KeySty:
+	CLR WorkState
+	AJMP KEY_RET
+SpdUp:
+	INC SPEED
+	MOV A,SPEED
+	CJNE A,#MaSpeed,K1
+	DEC SPEED
+K1:
+	AJMP KEY_RET
+SpdDown:
+	DEC SPEED
+	MOV A,SPEED
+	CJNE A,#MaSpeed,KEY_RET
+	MOV SPEED,#MiSpeed
+KEY_RET:
+	RET
+KEY:
+
+	RET
+T1INT:
+	PUSH ACC
+	PUSH PSW
+	MOV A,Speed
+	SUBB A,#MiSpeed
+	MOV DPTR,#DHTab
+	MOVC A,@A+DPTR
+	MOV TH1,A
+	MOV A,Speed
+	SUBB A,#MiSpeed
+	MOV DPTR,#MiSpeed
+	MOVC A,@A+DPTR
+	MOV TL1,A
+	MOV A,LoopDJ
+	CPL A
+	ORL P1,A
+	MOV A,LoopDJ
+	JNB ACC.7,SSN1
+	JMP SSN2
+SSN1:
+	MOV LoopDJ,#0F7H
+SSN2:
+	MOV A,LoopDJ
+	RL A
+	MOV LoopDJ,A
+	ANL P1,A
+	POP PSW
+	POP ACC
+	RETI
+DHTab:
+	DB 76,82,89,95,100,106,110,115,119,123,12
+DLTab:
+	DB 0,236,86,73,212,0,214,96,163,165
+
+T0INT:
+	POP PSW
+	POP ACC
+	
+	RETI
+    DISPTAB:
+    DB
+	0C0H,0F9H,0A4H,0B0H,99H,92H,82H,0F8H,80H,90H,88H,83H,0C6H,0A1H,86H,8EH,0FFH
+	END

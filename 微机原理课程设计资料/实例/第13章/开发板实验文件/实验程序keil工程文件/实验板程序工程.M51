@@ -1,0 +1,88 @@
+BL51 BANKED LINKER/LOCATER V6.05                                                        12/07/2011  10:23:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.05, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE C:\Documents and Settings\Administrator\桌面\11\流水灯.obj TO C:\Documents and Settings\Adminis
+>> trator\桌面\11\实验板程序工程 PRINT (.\实验板程序工程.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  C:\Documents and Settings\Administrator\桌面\11\流水灯.obj (流水灯)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  C:\Documents and Settings\Administrator\桌面\11\实验板程序工程 (流水灯)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0004H     UNIT         ?DT?流水灯
+            IDATA   000CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001AH     UNIT         ?PR?MAIN?流水灯
+            CODE    001DH     000DH     UNIT         ?PR?DELAY10MS?流水灯
+            CODE    002AH     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   C:\Documents and Settings\Administrator\桌面\11\实验板程序工程 (流水灯)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?流水灯
+
+?PR?MAIN?流水灯
+  +--> ?PR?DELAY10MS?流水灯
+
+
+
+SYMBOL TABLE OF MODULE:  C:\Documents and Settings\Administrator\桌面\11\实验板程序工程 (流水灯)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        流水灯
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0003H         PUBLIC        main
+  C:001DH         PUBLIC        delay10ms
+  D:0008H         PUBLIC        a
+  D:0009H         PUBLIC        b
+BL51 BANKED LINKER/LOCATER V6.05                                                      12/07/2011  10:23:50  PAGE 2
+
+
+  D:000AH         PUBLIC        j
+  D:000BH         PUBLIC        k
+  -------         PROC          DELAY10MS
+  C:001DH         LINE#         6
+  C:001DH         LINE#         7
+  C:001DH         LINE#         8
+  C:0020H         LINE#         9
+  C:0029H         LINE#         10
+  -------         ENDPROC       DELAY10MS
+  -------         PROC          MAIN
+  C:0003H         LINE#         11
+  C:0003H         LINE#         12
+  C:0003H         LINE#         13
+  C:0006H         LINE#         14
+  C:0006H         LINE#         15
+  C:0006H         LINE#         16
+  C:0009H         LINE#         17
+  C:0016H         LINE#         18
+  C:001BH         LINE#         19
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        流水灯
+
+Program Size: data=13.0 xdata=0 code=54
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

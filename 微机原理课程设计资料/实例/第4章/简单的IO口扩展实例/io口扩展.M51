@@ -1,0 +1,99 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        04/09/2010  00:30:49  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE IO口扩展.obj TO io口扩展
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  IO口扩展.obj (IO口繽誣)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  io口扩展 (IO口繽誣)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         _DATA_GROUP_
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0018H     UNIT         ?PR?MAIN?IO口繽誣
+            CODE    001BH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0027H     0009H     UNIT         ?PR?DELAY?IO口繽誣
+
+
+
+OVERLAY MAP OF MODULE:   io口扩展 (IO口繽誣)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?IO口繽誣
+
+?PR?MAIN?IO口繽誣              0008H    0001H
+  +--> ?PR?DELAY?IO口繽誣
+
+
+
+SYMBOL TABLE OF MODULE:  io口扩展 (IO口繽誣)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        IO口繽誣
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00B0H         PUBLIC        P3
+  C:0027H         PUBLIC        delay
+  C:0003H         PUBLIC        main
+  B:00B0H.0       PUBLIC        com
+  B:00B0H.7       PUBLIC        rd
+BL51 BANKED LINKER/LOCATER V5.03                                                      04/09/2010  00:30:49  PAGE 2
+
+
+  B:00B0H.6       PUBLIC        wr
+  -------         PROC          DELAY
+  -------         DO            
+  D:0007H         SYMBOL        i
+  D:0006H         SYMBOL        j
+  -------         ENDDO         
+  C:0027H         LINE#         7
+  C:0027H         LINE#         8
+  C:0027H         LINE#         10
+  C:0029H         LINE#         11
+  C:002FH         LINE#         12
+  -------         ENDPROC       DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0008H         SYMBOL        temp
+  -------         ENDDO         
+  C:0003H         LINE#         14
+  C:0003H         LINE#         15
+  C:0003H         LINE#         16
+  C:0003H         LINE#         17
+  C:0003H         LINE#         19
+  C:0006H         LINE#         20
+  C:0008H         LINE#         21
+  C:000AH         LINE#         22
+  C:000DH         LINE#         23
+  C:000FH         LINE#         24
+  C:0011H         LINE#         25
+  C:0014H         LINE#         26
+  C:0016H         LINE#         27
+  C:0019H         LINE#         28
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        IO口繽誣
+
+Program Size: data=10.0 xdata=0 code=48
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

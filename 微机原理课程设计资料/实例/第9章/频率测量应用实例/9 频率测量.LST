@@ -1,0 +1,84 @@
+C51 COMPILER V7.06   9_芲率测量                                                            01/07/2010 11:40:22 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 9_芲率测量
+OBJECT MODULE PLACED IN 9 频率测量.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 9 频率测量.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar code number[]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6,0xee,0x3e,0x9c,0x7a,0x9e,0x8e};
+   5          //共阴数码管编码表
+   6          uchar code address[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};//数码管选择编码表
+   7          uchar i,time;
+   8          uint count=0;
+   9          uint temp;
+  10          bit flag;
+  11          void delay(uint m)
+  12          {
+  13   1              while(m--);
+  14   1      }
+  15          
+  16          void main(void)
+  17          {
+  18   1         EA=1;//开总中断
+  19   1         ET0=1;//开定时器0中断
+  20   1         ET1=1;//开定时器1中断
+  21   1         TMOD=0x16;//设置T1为定时器工作方式为；T0为计数器，工作方式为2
+  22   1         TH0=0xff;
+  23   1         TL0=0xff;//给计数器0赋初值，计数值为1，即每来次中断信号，T0中断一次
+  24   1         TR0=1;//启动计数器0
+  25   1         TH1=(65536-50000)/256;
+  26   1         TL1=(65536-50000)%256;//给定时器1赋初值，时间为50ms（12MHz）
+  27   1         TR1=1;//启动定时器1.
+  28   1      while(1)//死循环
+  29   1        {
+  30   2         if(flag==1)//定时达满标志
+  31   2          {
+  32   3               temp=count;//储存计数器0的计数值
+  33   3               for(i=0;i<5;i++)//将计数值各个位取出，并从P1口输出
+  34   3                {
+  35   4                 P2=address[i];
+  36   4                 P1=number[temp%10];
+  37   4                 temp=temp/10;
+  38   4                 delay(500);//数码管动态显示，注意延时时间
+  39   4                }     
+  40   3              }
+  41   2         }
+  42   1      }
+  43          
+  44          void time0(void) interrupt 1//计数器中断子程序
+  45          {
+  46   1       count++;//每中断一次count加1
+  47   1      }                 
+  48          
+  49          void time1(void) interrupt 3//定时器中断子程序
+  50          {
+  51   1        TH1=(65536-50000)/256;
+  52   1        TL1=(65536-50000)%256;//重新给定时器赋初值
+  53   1        time++;//总定时时长：20x50ms=1s
+  54   1        if(time==20)
+  55   1        {
+C51 COMPILER V7.06   9_芲率测量                                                            01/07/2010 11:40:22 PAGE 2   
+
+  56   2         EA=0;//关闭总中断
+  57   2         flag=1;//定时达满标志置1
+  58   2        }
+  59   1      } 
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    153    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

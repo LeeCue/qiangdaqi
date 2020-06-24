@@ -1,0 +1,223 @@
+C51 COMPILER V8.09   12864                                                                 03/18/2010 21:41:51 PAGE 1   
+
+
+C51 COMPILER V8.09, COMPILATION OF MODULE 12864
+OBJECT MODULE PLACED IN 12864.OBJ
+COMPILER INVOKED BY: D:\程序\keil\C51\BIN\C51.EXE 12864.c BROWSE DEBUG OBJECTEXTEND TABS(6)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #define uint unsigned int
+   4          #define uchar unsigned char
+   5          #define DATA P0 //LCD12864数据线
+   6          sbit RS=P2^2; // 数据\指令 选择
+   7          sbit RW=P2^1; // 读\写 选择
+   8          sbit EN=P2^0; // 读\写使能
+   9          sbit cs1=P2^4; // 片选1
+  10          sbit cs2=P2^3; // 片选2
+  11          /**********定义中文字库************/
+  12          uchar code Hzk[]={
+  13          0x00,0x04,0x04,0xC4,0xB4,0x8C,0x87,0x84,0xF4,0x84,0x84,0x84,0x84,0x04,0x00,0x00,
+  14          0x00,0x00,0x20,0x18,0x0E,0x04,0x20,0x40,0xFF,0x00,0x02,0x04,0x18,0x30,0x00,0x00,/*"东",0*/
+  15          0x20,0x20,0x2A,0x2A,0xAA,0x6A,0x3E,0x2B,0xAA,0xAA,0xEA,0xAA,0x2A,0x22,0x20,0x00,
+  16          0x82,0x82,0x45,0x45,0x25,0x15,0x0D,0xFF,0x04,0x0C,0x14,0x24,0x65,0xC2,0x42,0x00,/*"秦",1*/
+  17          0x00,0x00,0xF8,0x48,0x48,0x48,0x48,0xFF,0x48,0x48,0x48,0x48,0xF8,0x00,0x00,0x00,
+  18          0x00,0x00,0x0F,0x04,0x04,0x04,0x04,0x3F,0x44,0x44,0x44,0x44,0x4F,0x40,0x70,0x00,/*"电",0*/
+  19          0x00,0x00,0x02,0x02,0x02,0x02,0x02,0xE2,0x12,0x0A,0x06,0x02,0x00,0x80,0x00,0x00,
+  20          0x01,0x01,0x01,0x01,0x01,0x41,0x81,0x7F,0x01,0x01,0x01,0x01,0x01,0x01,0x01,0x00,/*"子",1*/
+  21          0x40,0x20,0xD0,0x4C,0x43,0x44,0x48,0xD8,0x30,0x10,0x00,0xFC,0x00,0x00,0xFF,0x00,
+  22          0x00,0x00,0x3F,0x40,0x40,0x42,0x44,0x43,0x78,0x00,0x00,0x07,0x20,0x40,0x3F,0x00,/*"创",2*/
+  23          0x20,0x24,0x2C,0x35,0xE6,0x34,0x2C,0x24,0x00,0xFC,0x24,0x24,0xE2,0x22,0x22,0x00,
+  24          0x21,0x11,0x4D,0x81,0x7F,0x05,0x59,0x21,0x18,0x07,0x00,0x00,0xFF,0x00,0x00,0x00,/*"新",3*/
+  25          0x00,0x04,0x04,0x04,0xFF,0x54,0x54,0x54,0x54,0x54,0xFF,0x04,0x04,0x04,0x00,0x00,
+  26          0x11,0x51,0x49,0x4D,0x4B,0x49,0x49,0x7D,0x49,0x49,0x4B,0x45,0x4D,0x59,0x09,0x00,/*"基",4*/
+  27          0x10,0x10,0x10,0xFE,0x10,0x50,0x40,0xFE,0x20,0x20,0xFF,0x10,0x10,0xF8,0x10,0x00,
+  28          0x20,0x20,0x10,0x1F,0x08,0x08,0x00,0x3F,0x40,0x40,0x4F,0x42,0x44,0x43,0x70,0x00,/*"地",5*/
+  29          };
+  30          /*状态检查，LCD是否忙*/
+  31          void CheckState()       
+  32          {
+  33   1         uchar dat;//状态信息（判断是否忙）
+  34   1         RS=0; // 数据\指令选择，D/I（RS）="L" ，表示 DB7∽DB0 为显示指令数据 
+  35   1         RW=1; //R/W="H" ，E="H"数据被读到DB7∽DB0 
+  36   1         do{
+  37   2            DATA=0x00;
+  38   2            EN=1; //EN下降源
+  39   2            _nop_(); //一个短延时
+  40   2            dat=DATA;
+  41   2            EN=0;
+  42   2            dat=0x80 & dat; //仅当第7位为0时才可操作(判别busy信号)
+  43   2            }while(!(dat==0x00));
+  44   1      }
+  45           /*写命令到LCD中*/
+  46          SendCommandToLCD(uchar com)
+  47          {
+  48   1         CheckState();//状态检查，LCD是否忙
+  49   1         RS=0;     //向LCD发送命令。RS=0写指令，RS=1写数据
+  50   1         RW=0;//R/W="L" ，E="H→L"数据被写到 IR 或 DR 
+  51   1         DATA=com;       //com :命令
+  52   1         EN=1;   
+  53   1         _nop_();
+  54   1         _nop_(); 
+  55   1         EN=0;  //EN下降源
+C51 COMPILER V8.09   12864                                                                 03/18/2010 21:41:51 PAGE 2   
+
+  56   1      }
+  57           /*设置页 0xb8是页的首地址*/
+  58          void SetLine(uchar page)      
+  59          {
+  60   1        page=0xb8|page; //1011 1xxx 0<=page<=7 设定页地址--X 0-7,8行为一页64/8=8，共8页
+  61   1        SendCommandToLCD(page);
+  62   1      }
+  63           /*设定显示开始行，0xc0是行的首地址*/
+  64          void SetStartLine(uchar startline)     
+  65          {
+  66   1        startline=0xc0|startline; //1100 0000
+  67   1        SendCommandToLCD(startline); //设置从哪行开始：0--63，一般从0 行开始显示
+  68   1      }
+  69           /*设定列地址--Y 0-63 ，0x40是列的首地址*/
+  70          void SetColumn(uchar column)  
+  71          {
+  72   1        column=column &0x3f; //column最大值为64，越出 0=<column<=63
+  73   1        column= 0x40|column; //01xx xxxx
+  74   1        SendCommandToLCD(column);
+  75   1      }
+  76           /*开关显示，0x3f是开显示，0x3e是关显示*/
+  77          void SetOnOff(uchar onoff)       
+  78          {
+  79   1            onoff=0x3e|onoff; //0011 111x,onoff只能为0或者1
+  80   1            SendCommandToLCD(onoff);
+  81   1      }
+  82          /*写显示数据 */
+  83          void WriteByte(uchar dat)     
+  84          {
+  85   1         CheckState();//状态检查，LCD是否忙
+  86   1         RS=1; //RS=0写指令，RS=1写数据
+  87   1         RW=0;////R/W="L" ，E="H→L"数据被写到 IR 或 DR 
+  88   1         DATA=dat;//dat:显示数据
+  89   1         EN=1; 
+  90   1         _nop_();
+  91   1         _nop_();
+  92   1         EN=0;//EN下降源
+  93   1      }
+  94          /*选择屏幕screen: 0-全屏,1-左屏,2-右屏*/
+  95          void SelectScreen(uchar screen)       
+  96          {                                    
+  97   1         switch(screen)
+  98   1         { case 0: cs1=0;//全屏
+  99   2                   _nop_(); _nop_(); _nop_(); 
+ 100   2                   cs2=0; 
+ 101   2                   _nop_(); _nop_(); _nop_(); 
+ 102   2                   break; 
+ 103   2           case 1: cs1=0;//左屏
+ 104   2                   _nop_(); _nop_(); _nop_(); 
+ 105   2                   cs2=1;
+ 106   2                   _nop_(); _nop_(); _nop_(); 
+ 107   2                   break;
+ 108   2           case 2: cs1=1;//右屏
+ 109   2                   _nop_(); _nop_(); _nop_(); 
+ 110   2                   cs2=0;
+ 111   2                   _nop_(); _nop_(); _nop_(); 
+ 112   2                   break;
+ 113   2         }
+ 114   1      }
+ 115           /*清屏screen: 0-全屏,1-左屏,2-右*/
+ 116          void ClearScreen(uchar screen)        
+ 117          {     
+C51 COMPILER V8.09   12864                                                                 03/18/2010 21:41:51 PAGE 3   
+
+ 118   1           uchar i,j;
+ 119   1           SelectScreen(screen);
+ 120   1             for(i=0;i<16;i++)       //控制页数0-7，共8页
+ 121   1             {
+ 122   2                    SetLine(i);
+ 123   2                        SetColumn(0);
+ 124   2                    for(j=0;j<64;j++)        //控制列数0-63，共64列
+ 125   2                          {
+ 126   3                        WriteByte(0x00); //写点内容，列地址自动加1
+ 127   3                    }
+ 128   2           } 
+ 129   1      }
+ 130          /*延时程序*/
+ 131          void  delay(uint z)           
+ 132          {
+ 133   1            uint i,j;
+ 134   1            for(i=0; i<z; i++)
+ 135   1                  for(j = 0; j < 110; j++);
+ 136   1      }
+ 137          /*初始化LCD*/
+ 138          void InitLCD()      
+ 139          { 
+ 140   1            CheckState();
+ 141   1            SelectScreen(0);
+ 142   1            SetOnOff(0); //关显示
+ 143   1            SelectScreen(0);
+ 144   1            SetOnOff(1); //开显示
+ 145   1            SelectScreen(0);
+ 146   1            ClearScreen(0);//清屏
+ 147   1            SetStartLine(0); //开始行:0
+ 148   1      }
+ 149          /*显示全角汉字*/     
+ 150          void Display(uchar ss,uchar page,uchar column,uchar number)
+ 151          {
+ 152   1            int i;
+ 153   1            //选屏参数，pagr选页参数，column选列参数，number选第几汉字输出
+ 154   1            SelectScreen(ss);
+ 155   1            column=column&0x3f;
+ 156   1            SetLine(page);    //写上半页
+ 157   1            SetColumn(column); //控制列
+ 158   1            for(i=0;i<16;i++)  //控制16列的数据输出
+ 159   1            {
+ 160   2            WriteByte(Hzk[i+32*number]); //i+32*number汉字的前16个数据输出
+ 161   2            }
+ 162   1            SetLine(page+1);         //写下半页
+ 163   1            SetColumn(column);         //控制列
+ 164   1          for(i=0;i<16;i++)     //控制16列的数据输出
+ 165   1            {
+ 166   2            WriteByte(Hzk[i+32*number+16]);     //i+32*number+16汉字的后16个数据输出
+ 167   2            }
+ 168   1      } 
+ 169          /*主函数*/
+ 170          void main()
+ 171          {  
+ 172   1            uint i;
+ 173   1            InitLCD();//初始12864
+ 174   1            ClearScreen(0);//清屏
+ 175   1            
+ 176   1            while(1)
+ 177   1            {   
+ 178   2                  for(i=0;i<128;i++) //12864有128列，显示开始行从0~128切换，因此可以实现循环显示
+ 179   2                  {
+C51 COMPILER V8.09   12864                                                                 03/18/2010 21:41:51 PAGE 4   
+
+ 180   3                  SetStartLine(i);//显示开始行     
+ 181   3                  Display(2,0,0*16,0);//显示第一个字
+ 182   3                  Display(2,0,1*16,1);// 显示第二个字
+ 183   3                  Display(2,0,2*16,2);// 显示第三个字
+ 184   3                  Display(2,0,3*16,3);//  显示第四个字
+ 185   3                  Display(1,0,4*16,4);//  显示第五个字
+ 186   3                  Display(1,0,5*16,5);//  显示第六个字
+ 187   3                  Display(1,0,6*16,6);//  显示第七个字
+ 188   3                  Display(1,0,7*16,7);//  显示第八个字
+ 189   3                  SelectScreen(0);//选择全屏显示
+ 190   3                  delay(50); //延时 
+ 191   3            }
+ 192   2      }
+ 193   1      
+ 194   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    472    ----
+   CONSTANT SIZE    =    256    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

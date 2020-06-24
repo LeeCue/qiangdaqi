@@ -1,0 +1,158 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/30/2010  11:39:11  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE 10 ADC0808.obj TO ACD0808 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL WITH FLOATING POINT ARITHMETIC
+
+
+INPUT MODULES INCLUDED:
+  10 ADC0808.obj (10_ADC0808)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPMUL)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPDIV)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FCAST)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?CASTF)
+  C:\KEIL\C51\LIB\C51FPS.LIB (?C?FPGETOPN)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL\C51\LIB\C51S.LIB (?C?LNEG)
+
+
+LINK MAP OF MODULE:  ACD0808 (10_ADC0808)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     02C8H     UNIT         ?C?LIB_CODE
+            CODE    02CBH     008AH     UNIT         ?PR?MAIN?10_ADC0808
+            CODE    0355H     0020H     UNIT         ?PR?_DELAY?10_ADC0808
+            CODE    0375H     0010H     UNIT         ?CO?10_ADC0808
+            CODE    0385H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   ACD0808 (10_ADC0808)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?10_ADC0808
+
+?PR?MAIN?10_ADC0808
+  +--> ?PR?_DELAY?10_ADC0808
+  +--> ?CO?10_ADC0808
+
+?PR?_DELAY?10_ADC0808
+  +--> ?CO?10_ADC0808
+
+
+
+SYMBOL TABLE OF MODULE:  ACD0808 (10_ADC0808)
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/30/2010  11:39:11  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        10_ADC0808
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0375H         PUBLIC        table
+  B:00B0H.0       PUBLIC        START
+  B:00B0H.2       PUBLIC        OE
+  C:02CBH         PUBLIC        main
+  B:0090H.0       PUBLIC        dot
+  B:00B0H.1       PUBLIC        EOC
+  C:036AH         PUBLIC        _delay
+  C:0366H         SYMBOL        L?0010
+  -------         PROC          L?0009
+  -------         ENDPROC       L?0009
+  C:0366H         SYMBOL        L?0010
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        m
+  C:036AH         LINE#         9
+  C:036AH         LINE#         10
+  C:036AH         LINE#         11
+  C:0374H         LINE#         12
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  -------         DO            
+  D:0002H         SYMBOL        temp
+  -------         ENDDO         
+  C:02CBH         LINE#         13
+  C:02CBH         LINE#         14
+  C:02CBH         LINE#         16
+  C:02CDH         LINE#         17
+  C:02CFH         LINE#         18
+  C:02D1H         LINE#         19
+  C:02D3H         LINE#         20
+  C:02D3H         LINE#         21
+  C:02D3H         LINE#         22
+  C:02D6H         LINE#         23
+  C:02D6H         LINE#         24
+  C:02D8H         LINE#         25
+  C:02DEH         LINE#         26
+  C:0301H         LINE#         27
+  C:0303H         LINE#         29
+  C:0306H         LINE#         30
+  C:030EH         LINE#         31
+  C:0311H         LINE#         33
+  C:0314H         LINE#         34
+  C:0323H         LINE#         35
+  C:0326H         LINE#         37
+  C:0329H         LINE#         38
+  C:0349H         LINE#         39
+  C:034BH         LINE#         40
+  C:034EH         LINE#         42
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/30/2010  11:39:11  PAGE 3
+
+
+  C:0350H         LINE#         43
+  C:0352H         LINE#         44
+  C:0352H         LINE#         45
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        10_ADC0808
+
+  -------         MODULE        ?C?FPMUL
+  C:0003H         PUBLIC        ?C?FPMUL
+  -------         ENDMOD        ?C?FPMUL
+
+  -------         MODULE        ?C?FPDIV
+  C:010CH         PUBLIC        ?C?FPDIV
+  -------         ENDMOD        ?C?FPDIV
+
+  -------         MODULE        ?C?FCAST
+  C:01B3H         PUBLIC        ?C?FCASTC
+  C:01AEH         PUBLIC        ?C?FCASTI
+  C:01A9H         PUBLIC        ?C?FCASTL
+  -------         ENDMOD        ?C?FCAST
+
+  -------         MODULE        ?C?CASTF
+  C:01E7H         PUBLIC        ?C?CASTF
+  -------         ENDMOD        ?C?CASTF
+
+  -------         MODULE        ?C?UIDIV
+  C:0268H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?LNEG
+  C:02BDH         PUBLIC        ?C?LNEG
+  -------         ENDMOD        ?C?LNEG
+
+Program Size: data=9.0 xdata=0 code=913
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

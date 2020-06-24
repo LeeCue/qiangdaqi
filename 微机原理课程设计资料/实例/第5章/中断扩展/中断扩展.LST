@@ -1,0 +1,41 @@
+C51 COMPILER V7.06   謃__繽誣                                                              01/21/2010 10:55:19 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 謃__繽誣
+OBJECT MODULE PLACED IN 中断扩展.OBJ
+COMPILER INVOKED BY: C:\Program Files\keilc\C51\BIN\C51.EXE 中断扩展.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          main()
+   3          {
+   4   1      EA=1;
+   5   1      EX0=1;
+   6   1      }
+   7          void INT_0() interrupt 0
+   8          {
+   9   1      switch(P2)
+  10   1      {
+  11   2      case 0xfe: P1=0xfe;break;       //按键1
+  12   2      case 0xfd: P1=0xfd;break;       //按键2
+  13   2      case 0xfb: P1=0xfb;                     //按键3
+  14   2      }
+  15   1      
+  16   1      
+  17   1      
+  18   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     48    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

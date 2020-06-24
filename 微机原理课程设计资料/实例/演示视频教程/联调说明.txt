@@ -1,0 +1,7 @@
+第一步：打开KEIL文件，单击工具栏中的“Option for target”，在弹出的对话框中，点击“Debug”，在“USE”下拉菜单中选“Proteus VSM Monitor-51 Driver”,然后单击“Use”前面的黑色圆点，然后单击“OK”。
+
+第二步：打开Proteus文件，打开“Debug”菜单，单击“Use  remote debug Monitor”。
+
+第三步：回到KEIL环境中,在编辑窗口中，在用鼠标左键双击语句“P1=dis[0]”来设置断点，然后打开“Debug”菜单，选中“Start /Stop Debug session”，然后单击“RUN”图标开始仿真。
+
+第四步：按键盘F10，此时可以看到数码由零到1循环显示。

@@ -1,0 +1,45 @@
+C51 COMPILER V7.06   RAM                                                                   01/28/2010 14:07:53 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE RAM
+OBJECT MODULE PLACED IN RAM.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE RAM.C BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #include<absacc.h>
+   3          #define ramaddress XBYTE[0x0000]
+   4          unsigned char sum;
+   5          main()
+   6          {
+   7   1      unsigned char xdata *pt;
+   8   1      unsigned char i,sumtemp;
+   9   1      pt=&ramaddress;
+  10   1      
+  11   1      for(i=0;i<20;i++)//½á¹ûÎª20=14H
+  12   1      {*(pt+i)=1;
+  13   2      }
+  14   1      sum=0;
+  15   1      for(i=0;i<20;i++)
+  16   1      {
+  17   2      sumtemp=*(pt+i);
+  18   2      sum=sum+sumtemp;
+  19   2      }
+  20   1      P1=sum;
+  21   1      
+  22   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     45    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

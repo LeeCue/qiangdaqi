@@ -1,0 +1,112 @@
+C51 COMPILER V7.06   ZHUJI                                                                 01/05/2010 22:13:54 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE ZHUJI
+OBJECT MODULE PLACED IN zhuji.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE zhuji.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          
+   2          #include<reg51.h>
+   3          #include<absacc.h>
+   4          #include<intrins.h>
+   5          
+   6          unsigned char cort=0;
+   7          
+   8          sbit P3_5=P3^5;
+   9          
+  10          /*********************************
+  11          
+  12          按键扫描子程序
+  13          
+  14          *********************************/
+  15          
+  16          key_serial() interrupt 0 using 1
+  17          {
+  18   1               
+  19   1               ++cort;
+  20   1      }
+  21          
+  22          /*********************************
+  23          
+  24          发送子程序
+  25          
+  26          *********************************/
+  27          
+  28          void master(void)
+  29          {
+  30   1                      if(cort==1)
+  31   1                      {       
+  32   2                              SBUF=0x01;
+  33   2                              while(TI!=1);TI=0;
+  34   2                              P3_5=0;
+  35   2                              SM2=0;
+  36   2      
+  37   2                              while(RI!=1);RI=0;
+  38   2                              P2=SBUF;
+  39   2                              SM2=1;
+  40   2                              P3_5=1;
+  41   2                      }
+  42   1                      
+  43   1                      if(cort==2)
+  44   1                      {
+  45   2                              SBUF=0x02;
+  46   2                              while(TI!=1);TI=0;
+  47   2                              SM2=0;
+  48   2                              P3_5=0;
+  49   2      
+  50   2                              while(RI!=1);RI=0;
+  51   2                              P2=SBUF;
+  52   2                              SM2=1;
+  53   2                              P3_5=1;
+  54   2                      }
+  55   1                                                               
+C51 COMPILER V7.06   ZHUJI                                                                 01/05/2010 22:13:54 PAGE 2   
+
+  56   1                      if(cort==3)cort=1;
+  57   1                      SM2=1;
+  58   1                      
+  59   1      }
+  60          
+  61          /***************主程序****************/
+  62          
+  63          void main(void)
+  64          {
+  65   1              
+  66   1              P2=0xff;
+  67   1              TMOD=0x20;
+  68   1              TL1=0xfd;
+  69   1              TH1=0xfd;
+  70   1              PCON=0x00;
+  71   1              TR1=1;
+  72   1              SCON=0xf8;
+  73   1              EA=1;
+  74   1              EX0=1;
+  75   1              IT0=1;
+  76   1              P3_5=1;
+  77   1              while(1)
+  78   1              {
+  79   2                      master();                       //发送
+  80   2              }
+  81   1      }
+  82          
+  83          
+  84          
+  85          
+  86          
+  87          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    105    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

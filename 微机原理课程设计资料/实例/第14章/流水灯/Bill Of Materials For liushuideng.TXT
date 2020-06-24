@@ -1,0 +1,34 @@
+Bill Of Materials
+=================
+Design:   C:\Documents and Settings\Administrator\×ÀÃæ\Á÷Ë®µÆ\liushuideng.DSN
+Doc. no.: <NONE>
+Revision: <NONE>
+Author:   <NONE>
+Created:  10/03/19
+Modified: 10/03/20
+
+QTY  PART-REFS           VALUE               
+---  ---------           -----               
+Resistors
+---------
+8    R1-R8               470                 
+1    R9                  1k                  
+
+Capacitors
+----------
+2    C1,C2               22pF                
+1    C3                  20uF                
+
+Integrated Circuits
+-------------------
+1    U1                  AT89C52             
+
+Diodes
+------
+8    D1-D8               LED-RED             
+
+Miscellaneous
+-------------
+1    SW1                                     
+1    X1                  12MHz               
+

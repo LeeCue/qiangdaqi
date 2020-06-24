@@ -1,0 +1,12 @@
+C51 COMPILER V7.06   7_外部謃__                                                            01/05/2010 20:21:54 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 7_外部謃__
+OBJECT MODULE PLACED IN 7 外部中断.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE 7 外部中断.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+*** ERROR C318 OF 7 外部中断.c: can't open file '7 外部中断.c'
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)

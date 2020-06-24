@@ -1,0 +1,82 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/28/2010  14:07:53  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE RAM.obj TO RAM
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  RAM.obj (RAM)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  RAM (RAM)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?RAM
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     002DH     UNIT         ?PR?MAIN?RAM
+            CODE    0030H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   RAM (RAM)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?RAM
+
+
+
+SYMBOL TABLE OF MODULE:  RAM (RAM)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        RAM
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  C:0003H         PUBLIC        main
+  D:0008H         PUBLIC        sum
+  -------         PROC          MAIN
+  -------         DO            
+  D:0006H         SYMBOL        pt
+  D:0005H         SYMBOL        i
+  D:0004H         SYMBOL        sumtemp
+  -------         ENDDO         
+  C:0003H         LINE#         5
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/28/2010  14:07:53  PAGE 2
+
+
+  C:0003H         LINE#         6
+  C:0003H         LINE#         9
+  C:0006H         LINE#         11
+  C:0007H         LINE#         12
+  C:0012H         LINE#         13
+  C:0016H         LINE#         14
+  C:0019H         LINE#         15
+  C:001AH         LINE#         16
+  C:001AH         LINE#         17
+  C:0024H         LINE#         18
+  C:0028H         LINE#         19
+  C:002CH         LINE#         20
+  C:002FH         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        RAM
+
+Program Size: data=10.0 xdata=0 code=60
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,158 @@
+C51 COMPILER V6.12  19_DS18B20                                                             07/18/2009 11:57:19 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 19_DS18B20
+OBJECT MODULE PLACED IN .\19 DS18B20.OBJ
+COMPILER INVOKED BY: F:\我的文件\keil\Keil\C51\BIN\C51.EXE .\19 DS18B20.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uchar code table[]={0xfc,0x60,0xda,0xf2,0x66,0xb6,0xbe,0xe0,0xfe,0xf6,0xee,0x3e,0x9c,0x7a,0x9e,0x8e};
+   5          uchar code address[]={0xfe,0xfd,0xfb,0xf7,0xef,0xdf,0xbf,0x7f};
+   6          sbit DQ=P3^0;   
+   7          sbit dot=P1^0;
+   8          uchar i,temp1,temp2;
+   9          void delay(uint m)
+  10          {
+  11   1      	while(m--);
+  12   1      }
+  13          
+  14          Init(void) 
+  15          {
+  16   1      	 uchar i=0;
+  17   1      	 DQ=1;         
+  18   1      	 delay(8);  
+  19   1      	 DQ=0;         
+  20   1      	 delay(80); 
+  21   1      	 DQ=1;          
+  22   1      	 delay(14);
+  23   1      	 i=DQ;      
+  24   1      	 delay(20);
+  25   1      }
+  26           
+  27          uchar read_byte()
+  28          {
+  29   1      	uchar byte=0;
+  30   1      	for (i=0;i<8;i++)  //先传低位
+  31   1      	 {
+  32   2      	  DQ=0; 
+  33   2      	  byte>>=1;
+  34   2      	  DQ=1; 
+  35   2      	  if(DQ)
+  36   2      	  byte|=0x80;
+  37   2      	  delay(4);
+  38   2      	 }
+  39   1       	return(byte);
+  40   1      }
+  41          
+  42          write_byte(uchar byte)    
+  43          {
+  44   1       for (i=0;i<8;i++)         //先传低位
+  45   1       {
+  46   2        
+  47   2        DQ=0;
+  48   2        byte>>=1;
+  49   2        DQ=CY;  
+  50   2        delay(5);
+  51   2        DQ=1;  
+  52   2       }
+  53   1      }
+  54          
+  55          read_temp()
+C51 COMPILER V6.12  19_DS18B20                                                             07/18/2009 11:57:19 PAGE 2   
+
+  56          {	
+  57   1      	Init();
+  58   1      	write_byte(0xcc);       // Skip ROM
+  59   1      	write_byte(0x44);       // 启动温度转换
+  60   1      	delay(10);
+  61   1      
+  62   1      	Init();
+  63   1      	write_byte(0xcc);       //Skip ROM
+  64   1      	write_byte(0xbe);       //读取温度寄存器
+  65   1      
+  66   1      	temp1=read_byte();	    //低位
+  67   1      	temp2=read_byte();	    //高位
+  68   1      }
+  69          
+  70          main()
+  71          {
+  72   1      	bit flag;
+  73   1      	uint temp;
+  74   1      	while(1)
+  75   1      	{
+  76   2      	 read_temp();
+  77   2      	 temp=temp1&0x0f; 
+  78   2      	 if(temp2>127)
+  79   2      	 {
+  80   3      	  flag=1;
+  81   3      	  temp1=~temp1;
+  82   3      	  temp2=~temp2;	
+  83   3      	  temp=temp1&0x0f; 
+  84   3      	  temp+=0x01;
+  85   3      	 } 	   
+  86   2         	 temp=temp*625;	 	 
+  87   2      
+  88   2      	 temp1=temp1&0xf0; //取整数部分
+  89   2      
+  90   2      	 temp1=temp1/16;
+  91   2      	 temp2=temp2*16;
+  92   2      	 temp1+=temp2;
+  93   2      	 if(flag)
+  94   2      	 temp1+=0x01;
+  95   2      	             		   
+  96   2           for(i=0;i<4;i++)	   //显示小数部分
+  97   2      	 {	  
+  98   3      	  P2=address[i];
+  99   3      	  P1=table[temp%10];
+ 100   3      	  delay(750);	  
+ 101   3      	  temp/=10;
+ 102   3      	 }
+ 103   2      	 				  								    
+ 104   2      	 P2=0xef;	  	   	   //显示整数部分
+ 105   2      	 P1=table[temp1%10];
+ 106   2      	 dot=1;
+ 107   2      	 delay(750);
+ 108   2      
+ 109   2           if(temp1/100||temp1/10)  //高位去0
+ 110   2      	 {
+ 111   3      	  P2=0xdf;
+ 112   3      	  P1=table[temp1/10%10];
+ 113   3      	  delay(750);
+ 114   3      	 }
+ 115   2      
+ 116   2      	 if(temp1/100)	   //高位去0
+ 117   2      	 {
+C51 COMPILER V6.12  19_DS18B20                                                             07/18/2009 11:57:19 PAGE 3   
+
+ 118   3      	  P2=0xbf;
+ 119   3      	  P1=table[temp1/100%10];
+ 120   3         	  delay(800);
+ 121   3      	 }
+ 122   2      
+ 123   2      	 if(flag)		 //加负号
+ 124   2      	 {
+ 125   3      	  P2=0x7f;
+ 126   3      	  P1=0x02;
+ 127   3      	  delay(750);
+ 128   3      	  flag=0;
+ 129   3      	 }	 	
+ 130   2      	}
+ 131   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    417    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

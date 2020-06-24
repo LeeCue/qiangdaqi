@@ -1,0 +1,121 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/02/2010  13:38:50  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE .\STARTUP.obj, 直流电机.obj TO 直流电机
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  直流电机.obj (謃流_缁_)
+  C:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  直流电机 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?謃流_缁_
+            IDATA   0009H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0092H     0014H     UNIT         ?PR?INT0?謃流_缁_
+            CODE    00A6H     000BH     UNIT         ?PR?MAIN?謃流_缁_
+            CODE    00B1H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   直流电机 (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?謃流_缁_
+  +--> ?C_INITSEG
+
+
+
+SYMBOL TABLE OF MODULE:  直流电机 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0006H         SEGMENT       ?C_C51STARTUP
+  I:0009H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/02/2010  13:38:50  PAGE 2
+
+
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0009H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0006H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0006H         LINE#         99
+  C:0008H         LINE#         100
+  C:0009H         LINE#         101
+  C:000AH         LINE#         102
+  C:000CH         LINE#         151
+  C:000FH         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        謃流_缁_
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  D:0008H         PUBLIC        speed
+  C:00A6H         PUBLIC        main
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  C:0092H         PUBLIC        int0
+  -------         PROC          MAIN
+  C:00A6H         LINE#         3
+  C:00A6H         LINE#         4
+  C:00A6H         LINE#         5
+  C:00A8H         LINE#         6
+  C:00AAH         LINE#         7
+  C:00ACH         LINE#         8
+  C:00ACH         LINE#         9
+  C:00ACH         LINE#         10
+  C:00AFH         LINE#         11
+  -------         ENDPROC       MAIN
+  -------         PROC          INT0
+  C:0092H         LINE#         13
+  C:0096H         LINE#         15
+  C:009BH         LINE#         16
+  C:00A1H         LINE#         17
+  -------         ENDPROC       INT0
+  -------         ENDMOD        謃流_缁_
+
+Program Size: data=10.0 xdata=0 code=181
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

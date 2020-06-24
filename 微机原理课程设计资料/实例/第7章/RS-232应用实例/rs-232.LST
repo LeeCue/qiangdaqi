@@ -1,0 +1,37 @@
+C51 COMPILER V7.08   RS_232                                                                09/24/2010 15:40:37 PAGE 1   
+
+
+C51 COMPILER V7.08, COMPILATION OF MODULE RS_232
+OBJECT MODULE PLACED IN rs-232.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE rs-232.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg51.h>
+   2          main()
+   3          {
+   4   1      P1=13;
+   5   1      TMOD=0x20;
+   6   1      SM0=0;SM1=1;REN=1;
+   7   1      PCON=0;//波特率不加倍
+   8   1      TH1=0xFD;
+   9   1      TL1=0xFD;//波特率9600，
+  10   1      TR1=1;
+  11   1      P1=SBUF;while(!RI);RI=0;
+  12   1      SBUF=P1;while(!TI);TI=0;
+  13   1      }
+  14          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     40    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

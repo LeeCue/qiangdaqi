@@ -1,0 +1,125 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        01/15/2010  11:37:41  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+C:\PROGRAM FILES\KEILC\C51\BIN\BL51.EXE .\STARTUP.obj, IO口直接输出，输人.obj TO IO口直接输出输人 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\STARTUP.obj (?C_STARTUP)
+  IO口直接输出，输人.obj (IO口謃接蔩_鯻_蔩人)
+
+
+LINK MAP OF MODULE:  IO口直接输出输人 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001BH     UNIT         ?PR?DELAY?IO口謃接蔩_鯻_蔩人
+            CODE    001EH     0015H     UNIT         ?PR?MAIN?IO口謃接蔩_鯻_蔩人
+            CODE    0033H     000CH     UNIT         ?C_C51STARTUP
+
+
+
+OVERLAY MAP OF MODULE:   IO口直接输出输人 (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?IO口謃接蔩_鯻_蔩人
+
+?PR?MAIN?IO口謃接蔩_鯻_蔩人
+  +--> ?PR?DELAY?IO口謃接蔩_鯻_蔩人
+
+
+
+SYMBOL TABLE OF MODULE:  IO口直接输出输人 (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0033H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/15/2010  11:37:41  PAGE 2
+
+
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0036H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0000H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0033H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         92
+  C:0033H         LINE#         99
+  C:0035H         LINE#         100
+  C:0036H         LINE#         101
+  C:0037H         LINE#         102
+  C:0039H         LINE#         151
+  C:003CH         LINE#         155
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        IO口謃接蔩_鯻_蔩人
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:0003H         PUBLIC        delay
+  C:001EH         PUBLIC        main
+  -------         PROC          DELAY
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0003H         LINE#         3
+  C:0003H         LINE#         4
+  C:0003H         LINE#         5
+  C:0007H         LINE#         6
+  C:001DH         LINE#         7
+  -------         ENDPROC       DELAY
+  -------         PROC          MAIN
+  C:001EH         LINE#         8
+  C:001EH         LINE#         9
+  C:001EH         LINE#         10
+  C:001EH         LINE#         11
+  C:001EH         LINE#         12
+  C:0021H         LINE#         13
+  C:0027H         LINE#         14
+  C:0027H         LINE#         15
+  C:002EH         LINE#         16
+  C:0031H         LINE#         17
+  C:0031H         LINE#         18
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        IO口謃接蔩_鯻_蔩人
+
+Program Size: data=9.0 xdata=0 code=63
+BL51 BANKED LINKER/LOCATER V5.03                                                      01/15/2010  11:37:41  PAGE 3
+
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

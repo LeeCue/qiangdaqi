@@ -1,0 +1,55 @@
+C51 COMPILER V7.06   13_DAC0832                                                            01/15/2010 19:26:26 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE 13_DAC0832
+OBJECT MODULE PLACED IN 13 DAC0832.OBJ
+COMPILER INVOKED BY: C:\Program Files\keilc\C51\BIN\C51.EXE 13 DAC0832.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          sbit cs=P3^7;
+   5          sbit wr=P3^6;
+   6          void delay(uint m)
+   7          {
+   8   1              while(m--);
+   9   1      }
+  10          void main()
+  11          {
+  12   1       uchar k=0;
+  13   1       cs=0;
+  14   1       wr=0;
+  15   1        while(1)
+  16   1       { 
+  17   2        while(1)
+  18   2        {
+  19   3         P0=k++;
+  20   3         delay(100);
+  21   3         if(k==0xff)
+  22   3         break;
+  23   3        }
+  24   2        while(1)
+  25   2        {
+  26   3         P0=k--;
+  27   3         delay(100);
+  28   3         if(k==0)
+  29   3         break;
+  30   3        }
+  31   2       }
+  32   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     43    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

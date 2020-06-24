@@ -1,0 +1,23 @@
+C51 COMPILER V6.12  4__牍____琠___                                                       07/18/2009 11:04:58 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE 4__牍____琠___
+OBJECT MODULE PLACED IN .\4 数码管动态显示.OBJ
+COMPILER INVOKED BY: F:\我的文件\keil\Keil\C51\BIN\C51.EXE .\4 数码管动态显示.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     50    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

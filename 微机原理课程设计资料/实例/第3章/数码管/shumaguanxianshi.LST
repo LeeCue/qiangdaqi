@@ -1,0 +1,46 @@
+C51 COMPILER V8.09   SHUMAGUANXIANSHI                                                      03/27/2010 18:35:14 PAGE 1   
+
+
+C51 COMPILER V8.09, COMPILATION OF MODULE SHUMAGUANXIANSHI
+OBJECT MODULE PLACED IN shumaguanxianshi.OBJ
+COMPILER INVOKED BY: D:\程序\keil\C51\BIN\C51.EXE shumaguanxianshi.c BROWSE DEBUG OBJECTEXTEND TABS(6)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int 
+   4          uchar code dis[]={0xc0,0xf9}; //共阳数码管显示代码0~1
+   5          void delay(void)
+   6          {
+   7   1        uchar i,j;
+   8   1        for(i=100;i>0;i--)
+   9   1        for(j=500;j>0;j--);
+  10   1      
+  11   1      }
+  12          void main()
+  13          {  uchar i;
+  14   1        while(1)
+  15   1        {
+  16   2         P1=dis[0];//显示0
+  17   2         delay();
+  18   2         P1=dis[1];//显示1
+  19   2         delay();
+  20   2         
+  21   2        }
+  22   1      }
+*** WARNING C280 IN LINE 13 OF SHUMAGUANXIANSHI.C: 'i': unreferenced local variable
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     29    ----
+   CONSTANT SIZE    =      2    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
